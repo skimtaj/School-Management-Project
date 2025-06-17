@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marriage Certificate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2a4365;
+            --secondary-color: #1e4a75;
+            --accent-color: #3b82f6;
+            --light-gray: #f8fafc;
+            --medium-gray: #e2e8f0;
+            --dark-gray: #64748b;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background-color: #f1f5f9;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .certificate-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .certificate-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+
+        .certificate-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .certificate-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .certificate-body {
+            padding: 2rem;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--medium-gray);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transform: translateY(-50%);
+            transition: width 0.3s ease;
+            z-index: 2;
+        }
+
+        .step {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--medium-gray);
+            color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 3;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: var(--primary-color);
+            color: var(--light-gray);
+        }
+
+        .step.completed {
+            background-color: var(--primary-color);
+            color: var(--light-gray);
+        }
+
+        .step-label {
+            position: absolute;
+            top: 42px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--dark-gray);
+            white-space: nowrap;
+        }
+
+        .step.active .step-label,
+        .step.completed .step-label {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--dark-gray);
+            min-width: 120px;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            font-weight: 400;
+            color: var(--text-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline {
+            background: #0E9F72;
+            color: white;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-gray);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-next {
+            margin-left: auto;
+        }
+
+        .certificate-footer {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .certificate-title {
+                font-size: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step-label {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .certificate-body {
+                padding: 1.5rem;
+            }
+
+            .info-item {
+                flex-direction: column;
+            }
+
+            .info-label {
+                min-width: 100%;
+                margin-bottom: 0.25rem;
+            }
+
+            .action-buttons {
+                flex-direction: column-reverse;
+                gap: 0.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn-next {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate-container">
+        <div class="certificate-header">
+            <h1 class="certificate-title">MARRIAGE CERTIFICATE</h1>
+            <p class="certificate-subtitle">Government of India | Ministry of Home Affairs</p>
+        </div>
+
+        <div class="certificate-body">
+            <div class="progress-steps">
+                <div class="progress-bar" style="width: 0%"></div>
+                <div class="step active" id="step1">
+                    <span>1</span>
+                    <span class="step-label">Bridegroom</span>
+                </div>
+                <div class="step" id="step2">
+                    <span>2</span>
+                    <span class="step-label">Bride</span>
+                </div>
+                <div class="step" id="step3">
+                    <span>3</span>
+                    <span class="step-label">Marriage</span>
+                </div>
+            </div>
+
+            <div class="section active" id="section1">
+                <h2 class="section-title">Bridegroom Details</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Full Name:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomName%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Father's Name:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomFather%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date of Birth:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomDOB%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Village/Town:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomVillage%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">P.S.:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomPS%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">P.O.:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomPost%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">District:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomDist%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">PIN Code:</span>
+                        <span class="info-value">
+                            <%=registrySourse.groomPin%>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="section2">
+                <h2 class="section-title">Bride Details</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Full Name:</span>
+                        <span class="info-value">
+                            <%=registrySourse.brideName%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Father's Name:</span>
+                        <span class="info-value">
+                            <%=registrySourse.brideFather%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date of Birth:</span>
+                        <span class="info-value">
+                            <%=registrySourse.brideDOB%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Village/Town:</span>
+                        <span class="info-value">
+                            <%=registrySourse.brideVillage%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">P.S.:</span>
+                        <span class="info-value">
+                            <%=registrySourse.bridePS%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">P.O.:</span>
+                        <span class="info-value">
+                            <%=registrySourse.bridePost%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">District:</span>
+                        <span class="info-value">
+                            <%=registrySourse.brideDist%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">PIN Code:</span>
+                        <span class="info-value">
+                            <%=registrySourse.bridePin%>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="section3">
+                <h2 class="section-title">Marriage Details</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Marriage Date:</span>
+                        <span class="info-value">
+                            <%=registrySourse.marriageDate%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Marriage Place:</span>
+                        <span class="info-value">
+                            <%=registrySourse.place%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Registration Date:</span>
+                        <span class="info-value">
+                            <%=registrySourse.regDate%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Mohor Amount:</span>
+                        <span class="info-value">
+                            <%=registrySourse.mohor%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Volume No:</span>
+                        <span class="info-value">
+                            <%=registrySourse.vol_no%>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Page No:</span>
+                        <span class="info-value">
+                            <%=registrySourse.page_no%>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-outline" id="prevBtn" style="display: none;">
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn btn-primary btn-next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-primary" id="printBtn" style="display: none;">
+                    <i class="fas fa-print"></i> Print Certificate
+                </button>
+            </div>
+        </div>
+
+        <div class="certificate-footer">
+            <p>This is an electronically generated document. No signature required.</p>
+            <p>© 2023 Government of India. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('.section');
+            const steps = document.querySelectorAll('.step');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const printBtn = document.getElementById('printBtn');
+            const progressBar = document.querySelector('.progress-bar');
+
+            let currentSection = 0;
+            const totalSections = sections.length;
+
+            updateFormDisplay();
+
+            nextBtn.addEventListener('click', function () {
+                if (currentSection < totalSections - 1) {
+                    currentSection++;
+                    updateFormDisplay();
+                }
+            });
+
+            prevBtn.addEventListener('click', function () {
+                if (currentSection > 0) {
+                    currentSection--;
+                    updateFormDisplay();
+                }
+            });
+
+            
+
+            function updateFormDisplay() {
+                sections.forEach(section => section.classList.remove('active'));
+
+                sections[currentSection].classList.add('active');
+
+                const progressPercent = (currentSection / (totalSections - 1)) * 100;
+                progressBar.style.width = progressPercent + '%';
+
+                steps.forEach((step, index) => {
+                    step.classList.remove('active', 'completed');
+                    if (index < currentSection) {
+                        step.classList.add('completed');
+                    } else if (index === currentSection) {
+                        step.classList.add('active');
+                    }
+                });
+
+                if (currentSection === 0) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'flex';
+                    printBtn.style.display = 'none';
+                } else if (currentSection === totalSections - 1) {
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'none';
+                    printBtn.style.display = 'flex';
+                } else {
+                    prevBtn.style.display = 'flex';
+                    nextBtn.style.display = 'flex';
+                    printBtn.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
