@@ -1,505 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
+<%-include('home_heaer')%>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.M.R Office | Official Marriage Services</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
-    <style>
-        /* CSS Variables */
-        :root {
-            --primary: #2a4365;
-            --secondary: #c53030;
-            --accent: #ecc94b;
-            --light: #f7fafc;
-            --dark: #1a202c;
-            --gray: #718096;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Scholarship Portal</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
-            overflow-x: hidden;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            border-radius: 4px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #9b2c2c;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(197, 48, 48, 0.2);
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background-color: white;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-img {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-        }
-
-        .logo-text h1 {
-            font-size: 1.4rem;
-            color: var(--primary);
-            margin-bottom: 2px;
-        }
-
-        .logo-text p {
-            font-size: 0.75rem;
-            color: var(--gray);
-            font-weight: 300;
-        }
-
-        nav ul {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        nav ul li a {
-            font-weight: 500;
-            font-size: 0.95rem;
-            position: relative;
-            padding: 5px 0;
-            transition: var(--transition);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--secondary);
-            transition: var(--transition);
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary);
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .login-btn {
-            padding: 8px 20px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            background-color: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            transition: var(--transition);
-        }
-
-        .login-btn:hover {
-            background-color: rgba(42, 67, 101, 0.1);
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            min-height: 700px;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(rgba(42, 67, 101, 0.85), rgba(42, 67, 101, 0.85)),
-                url('https://effectivelaws.com/wp-content/uploads/2024/12/Solemnization-of-Marriage-in-India.jpg') no-repeat center center/cover;
-            color: white;
-            text-align: center;
-            padding-top: 80px;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3.2rem;
-            margin-bottom: 20px;
-            line-height: 1.1;
-        }
-
-        .hero p {
-            font-size: 1.15rem;
-            margin-bottom: 40px;
-            opacity: 0.9;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Process Steps */
-        .process-steps {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .process-step {
-            background-color: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            border-radius: 8px;
-            padding: 18px 15px;
-            min-width: 160px;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            flex: 1;
-            max-width: 180px;
-        }
-
-        .process-step:hover {
-            transform: translateY(-5px);
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-
-        .step-number {
-            display: inline-block;
-            width: 28px;
-            height: 28px;
-            background-color: var(--accent);
-            color: var(--dark);
-            border-radius: 50%;
-            font-weight: 700;
-            line-height: 28px;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-        }
-
-        .process-step h3 {
-            font-size: 0.95rem;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 60px 0 25px;
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #a0aec0;
-            font-size: 0.85rem;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 1200px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.5rem;
+        <style>
+            :root {
+                --primary: #3a7bd5;
+                --secondary: #00d2ff;
+                --accent: #ff5e62;
+                --light: #f8f9fa;
+                --dark: #212529;
+                --text: #495057;
             }
 
-            .hero p {
-                font-size: 1.1rem;
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
             }
 
-            .process-step {
-                min-width: 140px;
-                padding: 15px 12px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            nav {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                padding: 20px;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                transform: translateY(-150%);
-                opacity: 0;
-                transition: var(--transition);
-                z-index: 999;
-            }
-
-            nav.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-
-            nav ul {
+            body {
+                background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+                color: var(--text);
+                min-height: 100vh;
+                display: flex;
                 flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
             }
 
-            .login-btn {
-                width: 100%;
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+            main {
+                flex: 1;
+                padding: 2rem 0;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+                margin-top: 30px;
+            }
+
+            .page-header {
                 text-align: center;
+                margin-bottom: 3rem;
             }
 
-            .hero {
-                min-height: 650px;
-                padding-top: 70px;
+            .page-title {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                color: var(--dark);
+                position: relative;
+                display: inline-block;
             }
 
-            .hero h1 {
-                font-size: 2.2rem;
+            .page-title:after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 4px;
+                background: linear-gradient(to right, var(--primary), var(--secondary));
+                border-radius: 2px;
             }
 
-            .hero p {
+            .page-subtitle {
+                color: var(--text);
+                font-weight: 300;
+                max-width: 700px;
+                margin: 0 auto;
+                margin-top: 10px;
+            }
+
+            .content-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 2rem;
+            }
+
+            .rules-card {
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+                padding: 2.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+                color: var(--dark);
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .section-title i {
+                color: var(--primary);
+            }
+
+            .rules-list {
+                list-style: none;
+            }
+
+            .rules-list li {
+                padding: 0.8rem 0;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .rules-list li:last-child {
+                border-bottom: none;
+            }
+
+            .rule-icon {
+                color: var(--secondary);
+                margin-top: 3px;
+            }
+
+            .highlight {
+                background-color: rgba(0, 210, 255, 0.1);
+                padding: 0.2rem 0.5rem;
+                border-radius: 4px;
+                font-weight: 600;
+                color: var(--primary);
+            }
+
+            .quick-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .action-card {
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+                padding: 2rem;
+                text-align: center;
+                transition: all 0.3s;
+            }
+
+            .action-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+            }
+
+            .action-card.fresher {
+                border-top: 4px solid var(--primary);
+            }
+
+            .action-card.registered {
+                border-top: 4px solid var(--accent);
+            }
+
+            .action-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+                color: var(--dark);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+
+            .action-btn {
+                display: inline-block;
+                padding: 0.8rem 1.8rem;
+                border-radius: 50px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s;
+                margin-top: 1rem;
+                border: none;
+                cursor: pointer;
                 font-size: 1rem;
             }
 
-            .process-steps {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-                max-width: 400px;
-                margin: 40px auto 0;
+            .btn-primary {
+                background: linear-gradient(to right, var(--primary), var(--secondary));
+                color: white;
             }
 
-            .process-step {
-                width: 100%;
-                min-width: auto;
-                max-width: 100%;
-                margin: 0;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .logo-text h1 {
-                font-size: 1.3rem;
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(58, 123, 213, 0.3);
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            .btn-accent {
+                background: linear-gradient(to right, var(--accent), #ff9966);
+                color: white;
             }
 
-            .process-steps {
-                max-width: 350px;
+            .btn-accent:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(255, 94, 98, 0.3);
             }
 
-            .process-step h3 {
-                font-size: 0.9rem;
-            }
-        }
+            @media (max-width: 992px) {
+                .content-grid {
+                    grid-template-columns: 1fr;
+                }
 
-        @media (max-width: 400px) {
-            .process-steps {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 300px;
+                .quick-actions {
+                    flex-direction: row;
+                }
             }
 
-            .process-step {
-                padding: 12px 10px;
-            }
-        }
-    </style>
-</head>
+            @media (max-width: 768px) {
+                .page-title {
+                    font-size: 2rem;
+                }
 
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-container">
-                <div class="logo">
-                    <img src="https://static.wixstatic.com/media/0cbc6a_f5df8000f5274b8996921910ebec3cd9~mv2.png/v1/fill/w_980,h_980,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/MRILogo.png"
-                        alt="M.M.R Office Logo" class="logo-img">
-                    <div class="logo-text">
-                        <h1>M.M.R Office</h1>
-                        <p>Official Marriage Services</p>
+                .quick-actions {
+                    flex-direction: column;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .container {
+                    padding: 0 1rem;
+                }
+
+                .page-title {
+                    font-size: 1.8rem;
+                }
+
+                .rules-card {
+                    padding: 1.5rem;
+                }
+
+                .section-title {
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">2025-2026 Scholarship Program</h1>
+                    <p class="page-subtitle">
+                        Discover financial aid opportunities to support your academic journey.
+                        Browse available scholarships and apply today.
+                    </p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="rules-section">
+                        <div class="rules-card">
+                            <h2 class="section-title">
+                                <i class="fas fa-file-alt"></i> Program Guidelines
+                            </h2>
+                            <ul class="rules-list">
+                                <li>
+                                    <div>
+                                        Application period: <span class="highlight">October 1 - December 31,
+                                            2023</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><b>Class Level:</b> Students must be studying between Class 5 and Class 10.
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><b>Academic Performance:</b> Minimum 70% marks in the last annual
+                                        examination.
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><b>Family Income:</b> Annual family income below ₹1,00,000.</div>
+                                </li>
+                                <li>
+                                    <div><b>Attendance:</b> Minimum 75% attendance in school</div>
+                                </li>
+                                <li>
+                                    <div>Recipients must maintain satisfactory academic progress</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <script>
+                <% if (messages.success) { %>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: "<%= messages.success %>",
+                                confirmButtonColor: '#3085d6'
+                            });
+                <% } %>
+            
+                <% if (messages.error) { %>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: "<%= messages.error %>",
+                                confirmButtonColor: '#d33'
+                            });
+                <% } %>
+                    </script>
+
+                    <div class="quick-actions">
+                        <div class="action-card fresher">
+                            <h3 class="action-title">
+                                <i class="fas fa-user-plus"></i> New Applicants
+                            </h3>
+                            <p>Start your scholarship application process</p>
+                            <a href="/pragatischolarship/apply-scholarship" class="action-btn btn-primary">Apply
+                                Now</a>
+                        </div>
+
+                        <div class="action-card registered">
+                            <h3 class="action-title">
+                                <i class="fas fa-user-check"></i> Track Application
+                            </h3>
+                            <p>Track Your Scholarship</p>
+                            <a href="/pragatischolarship/track-application" class="action-btn btn-accent">Login to
+                                Portal</a>
+                        </div>
                     </div>
                 </div>
-
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="/MMR-office/user-login" class="login-btn">User Login</a></li>
-                    </ul>
-                </nav>
             </div>
-        </div>
-    </header>
+        </main>
 
-    <!-- Hero Section with Process -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Your Journey Begins Here</h1>
-            <p>Professional marriage services with the highest standards of excellence. Let us handle the legalities
-                while you focus on your love story.</p>
 
-            <!-- Process Steps - One line on desktop, two columns on mobile -->
-            <div class="process-steps">
+        <%-include('footer')%>
 
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3>Login</h3>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3>Apply Online</h3>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3>Get Meeting</h3>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3>Receive Certificate</h3>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer Section -->
-    <footer>
-        <div class="container">
-            <div class="copyright">
-                <p>&copy; 2023 M.M.R Office. All Rights Reserved. | Designed with <i class="fas fa-heart"
-                        style="color: var(--secondary);"></i> by M.M.R Team</p>
-            </div>
-        </div>
-    </footer>
 
-    <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainNav = document.getElementById('mainNav');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-            mobileMenuBtn.innerHTML = mainNav.classList.contains('active')
-                ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('nav ul li a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (mainNav.classList.contains('active')) {
-                    mainNav.classList.remove('active');
-                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-        });
-
-        // Sticky header on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.classList.toggle('sticky', window.scrollY > 0);
-        });
-    </script>
-</body>
+    </body>
 
 </html>

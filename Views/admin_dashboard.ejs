@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%-include('admin_header', {adminDetail :adminSourse })%>
+<%-include('admin_header', {admin : adminSourse})%>
 
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <title>Admin Dashboard | Analytics Console</title>
+        <title>Admin Dashboard | Program Management</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -32,23 +32,23 @@
             }
 
             :root {
-                --primaryColor: #38338a;
-                --primaryLight: #6366F1;
-                --primaryLighter: #818CF8;
-                --primaryDark: #4338CA;
-                --secondaryColor: #10B981;
-                --dangerColor: #EF4444;
-                --warningColor: #F59E0B;
-                --infoColor: #3B82F6;
+                --primaryColor: #2c3e50;
+                --primaryLight: #34495e;
+                --primaryLighter: #7f8c8d;
+                --primaryDark: #1a252f;
+                --secondaryColor: #27ae60;
+                --dangerColor: #e74c3c;
+                --warningColor: #f39c12;
+                --infoColor: #3498db;
                 --whiteColor: #FFFFFF;
-                --lightGray: #F9FAFB;
-                --mediumGray: #E5E7EB;
-                --darkGray: #6B7280;
-                --textColor: #111827;
-                --borderColor: #D1D5DB;
-                --smallBorder: 8px;
-                --mediumBorder: 12px;
-                --bigBorder: 16px;
+                --lightGray: #f5f6f7;
+                --mediumGray: #ecf0f1;
+                --darkGray: #95a5a6;
+                --textColor: #2c3e50;
+                --borderColor: #bdc3c7;
+                --smallBorder: 6px;
+                --mediumBorder: 10px;
+                --bigBorder: 14px;
                 --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
                 --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
                 --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -122,6 +122,7 @@
                 padding: 1.5rem;
             }
 
+            /* Main Content Grid */
             .main {
                 display: grid;
                 gap: 1.5rem;
@@ -176,6 +177,7 @@
                 color: var(--textColor);
             }
 
+            /* Stats Boxes */
             .stats-box {
                 display: flex;
                 flex-direction: column;
@@ -202,7 +204,7 @@
                 right: 0;
                 width: 80px;
                 height: 80px;
-                background-color: rgba(255, 255, 255, 0.1);
+                background-color: rgba(0, 0, 0, 0.03);
                 border-radius: 50%;
                 transform: translate(30%, -30%);
             }
@@ -263,6 +265,7 @@
                 color: var(--warningColor);
             }
 
+            /* Trend indicator */
             .trend-indicator {
                 display: inline-flex;
                 align-items: center;
@@ -274,49 +277,21 @@
             }
 
             .trend-up {
-                background-color: rgba(16, 185, 129, 0.1);
+                background-color: rgba(39, 174, 96, 0.1);
                 color: var(--secondaryColor);
             }
 
             .trend-down {
-                background-color: rgba(239, 68, 68, 0.1);
+                background-color: rgba(231, 76, 60, 0.1);
                 color: var(--dangerColor);
             }
 
             .trend-neutral {
-                background-color: rgba(156, 163, 175, 0.1);
+                background-color: rgba(149, 165, 166, 0.1);
                 color: var(--darkGray);
             }
 
-            .chart-section {
-                width: 100%;
-                padding: 1.5rem;
-                background-color: var(--whiteColor);
-                border-radius: var(--mediumBorder);
-                box-shadow: var(--shadow);
-                overflow: hidden;
-                grid-column: span 12;
-            }
-
-            .chart-section .section-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 1.5rem;
-            }
-
-            .chart-section .section-title {
-                font-size: var(--fs18);
-                font-weight: 600;
-                color: var(--textColor);
-            }
-
-            .chart-container {
-                position: relative;
-                height: 350px;
-                width: 100%;
-            }
-
+            /* Data Table Section */
             .data-table-section {
                 width: 100%;
                 padding: 1.5rem;
@@ -344,6 +319,7 @@
                 gap: 0.5rem;
             }
 
+            /* Filter Controls */
             .filter-controls {
                 display: flex;
                 flex-wrap: wrap;
@@ -388,7 +364,7 @@
             .filter-select:focus {
                 outline: none;
                 border-color: var(--primaryLight);
-                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                box-shadow: 0 0 0 3px rgba(52, 73, 94, 0.1);
             }
 
             .filter-actions {
@@ -411,7 +387,7 @@
             }
 
             .filter-btn.apply {
-                background-color: #0E9F72;
+                background-color: var(--primaryColor);
                 color: var(--whiteColor);
             }
 
@@ -441,7 +417,7 @@
             }
 
             .table th {
-                background-color: #263849;
+                background-color: var(--primaryColor);
                 color: var(--whiteColor);
                 padding: 1rem 1.25rem;
                 text-align: left;
@@ -463,7 +439,7 @@
             }
 
             .table tr:hover {
-                background-color: rgba(79, 70, 229, 0.03);
+                background-color: rgba(52, 73, 94, 0.03);
             }
 
             .status-badge {
@@ -475,20 +451,21 @@
             }
 
             .status-active {
-                background-color: rgba(16, 185, 129, 0.1);
+                background-color: rgba(39, 174, 96, 0.1);
                 color: var(--secondaryColor);
             }
 
             .status-pending {
-                background-color: rgba(245, 158, 11, 0.1);
+                background-color: rgba(243, 156, 18, 0.1);
                 color: var(--warningColor);
             }
 
             .status-inactive {
-                background-color: rgba(156, 163, 175, 0.1);
+                background-color: rgba(149, 165, 166, 0.1);
                 color: var(--darkGray);
             }
 
+            /* Action buttons */
             .action-btn {
                 width: 30px;
                 height: 30px;
@@ -516,6 +493,7 @@
                 color: var(--dangerColor);
             }
 
+            /* Scroll to top button */
             .scroll-top {
                 position: fixed;
                 bottom: 2rem;
@@ -553,6 +531,7 @@
                 font-size: 1.25rem;
             }
 
+            /* DataTables Customization */
             .dataTables_wrapper {
                 width: 100%;
             }
@@ -573,7 +552,7 @@
             .dataTables_wrapper .dataTables_filter input:focus {
                 border-color: var(--primaryLight);
                 outline: none;
-                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+                box-shadow: 0 0 0 3px rgba(52, 73, 94, 0.1);
             }
 
             .dataTables_wrapper .dataTables_length select {
@@ -636,6 +615,7 @@
                 padding-top: 1rem;
             }
 
+            /* Notification Badge */
             .notification-badge {
                 position: absolute;
                 top: -5px;
@@ -652,6 +632,7 @@
                 font-weight: bold;
             }
 
+            /* Tooltip */
             .tooltip-inner {
                 font-size: var(--fs13);
                 padding: 0.375rem 0.75rem;
@@ -663,6 +644,7 @@
                 border-top-color: var(--textColor);
             }
 
+            /* Responsive Styles */
             @media (min-width: 576px) {
                 .container {
                     padding: 1.5rem;
@@ -706,14 +688,9 @@
                     grid-row: 1;
                 }
 
-                .chart-section {
-                    grid-column: span 12;
-                    grid-row: 2;
-                }
-
                 .data-table-section {
                     grid-column: span 12;
-                    grid-row: 3;
+                    grid-row: 2;
                 }
             }
 
@@ -724,6 +701,7 @@
                 }
             }
 
+            /* Small screens (below 576px) */
             @media (max-width: 575.98px) {
                 html {
                     font-size: 14px;
@@ -778,6 +756,7 @@
                     margin-top: 0.5rem;
                 }
 
+                /* Mobile pagination adjustments */
                 .dataTables_wrapper .dataTables_paginate {
                     gap: 0.125rem;
                 }
@@ -789,6 +768,7 @@
                     padding: 0 0.25rem;
                 }
 
+                /* Filter controls on mobile */
                 .filter-controls {
                     flex-direction: column;
                     gap: 0.75rem;
@@ -799,6 +779,7 @@
                 }
             }
 
+            /* Animation Classes */
             .fade-in {
                 animation: fadeIn 0.5s ease-in-out;
             }
@@ -821,16 +802,69 @@
 
             @keyframes pulse {
                 0% {
-                    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+                    box-shadow: 0 0 0 0 rgba(44, 62, 80, 0.4);
                 }
 
                 70% {
-                    box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+                    box-shadow: 0 0 0 10px rgba(44, 62, 80, 0);
                 }
 
                 100% {
-                    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+                    box-shadow: 0 0 0 0 rgba(44, 62, 80, 0);
                 }
+            }
+
+
+
+
+            .reject-container {
+                background: #f8f9fa;
+                border: 1px solid #e0e0e0;
+                border-radius: 4px;
+                padding: 16px;
+                margin: 8px 0;
+                display: none;
+
+            }
+
+            .reject-form {
+                margin: 0;
+            }
+
+            .reject-label {
+                display: block;
+                font-weight: 600;
+                color: #495057;
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+
+            .reject-textarea {
+                width: 100%;
+                min-height: 100px;
+                padding: 8px 12px;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                font-family: inherit;
+                font-size: 14px;
+                color: #495057;
+                resize: vertical;
+                box-sizing: border-box;
+            }
+
+            .reject-submit {
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+            .reject-submit-container {
+                margin-top: 12px;
+                text-align: right;
             }
         </style>
     </head>
@@ -839,55 +873,54 @@
         <div class="container" id="top">
             <main class="content">
                 <section class="main">
+                    <!-- Stats Boxes -->
                     <div class="box stats-box fade-in" style="animation-delay: 0.1s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=totalCertificates%> <span class="trend-indicator trend-up">
+                                <%=totalCandidates%>
                             </h4>
-                            <span class="stats-label">Total Certifictes
+                            <span class="stats-label">Applied Candidates</span>
                         </div>
                         <div class="stats-icon">
-                            <i class="fas fa-file-alt"></i>
+                            <i class="fas fa-calendar-alt"></i>
                         </div>
                     </div>
 
                     <div class="box stats-box secondary fade-in" style="animation-delay: 0.2s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=currentMonthTotalRegistry%><span class="trend-indicator trend-up"> </span>
-                            </h4>
-                            <span class="stats-label">Current Month Certificates </span>
+                                <%=allPaymentCandidates%>
+                                    <span class="stats-label">Total Payment</span>
+
                         </div>
                         <div class="stats-icon">
-                            <i class="fas fa-file-alt"></i>
+                            <i class="fas fa-check-circle"></i>
                         </div>
                     </div>
 
                     <div class="box stats-box warning fade-in" style="animation-delay: 0.3s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=currentMonthRevenue%> <span class="trend-indicator trend-down"> </span>
+                                <%=totalApprovedCandidates%>
                             </h4>
-                            <span class="stats-label">Monthly Revenue</span>
+                            <span class="stats-label">Pending Approval</span>
                         </div>
                         <div class="stats-icon">
-                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            <i class="fas fa-clock"></i>
                         </div>
                     </div>
 
                     <div class="box stats-box danger fade-in" style="animation-delay: 0.4s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=totalRevenue%>
+                                <%=totalRejectedCandidates%>
                             </h4>
-                            <span class="stats-label">Total Revenue</span>
+                            <span class="stats-label">Rejected Candidates</span>
                         </div>
                         <div class="stats-icon">
-                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                            <i class="fas fa-times-circle"></i>
                         </div>
                     </div>
-
-
 
 
                     <script>
@@ -912,191 +945,402 @@
                     </script>
 
 
-
-
-                    <div class="chart-section fade-in" style="animation-delay: 0.5s;">
-                        <div class="section-header">
-                            <h3 class="section-title">Monthly Certificates Overview</h3>
-                            
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="monthlyChart"></canvas>
-                        </div>
-                    </div>
-
+                    <!-- Data Table Section -->
                     <div class="data-table-section fade-in" style="animation-delay: 0.6s;">
                         <div class="section-header">
                             <h3 class="section-title">Program Management</h3>
                             <div class="section-actions">
-                                <a href="/mmr-office/new-certificate" class="box-action-btn" title="Add New"
-                                    style='text-decoration : none'>
+                                <a href="#" class="box-action-btn" title="Add New" style='text-decoration : none'>
                                     <i class="fas fa-plus"></i>
                                 </a>
 
-                                <a href="/dowload-allRegistry" class="box-action-btn" title="Export in excel"
+                                <a href="#" class="box-action-btn" title="Export in excel"
                                     style='text-decoration : none'>
-                                    <i class="fas fa-file-export"></i>
+                                    <i class="fas fa-file-excel"></i>
+                                </a>
+
+                                <a href="#" class="box-action-btn" title="PDF" style='text-decoration : none'>
+                                    <i class="fas fa-file-pdf"></i>
                                 </a>
                             </div>
                         </div>
 
+                        <!-- Filter Controls -->
                         <div class="filter-controls">
                             <div class="filter-group">
-                                <label class="filter-label">Groom Name </label>
-                                <select class="filter-select" id="groom">
-                                    <option value="">All Grooms</option>
-
-                                    <% adminSourse.Registry.forEach((regi)=>{ %>
-                                        <option value='<%=regi.groomName%>'>
-                                            <%=regi.groomName%>
-                                        </option>
-
-                                        <% })%>
+                                <label class="filter-label">Verification Status</label>
+                                <select class="filter-select" id="verification">
+                                    <option value="">All Types</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>
 
                                 </select>
+
+
                             </div>
                             <div class="filter-group">
-                                <label class="filter-label"> Bride Name</label>
-                                <select class="filter-select" id="bride">
-                                    <option value="">All Brides</option>
+                                <label class="filter-label">Payment Status</label>
+                                <select class="filter-select" id="payment">
+                                    <option value="">All Types</option>
+                                    <option value="Success">Success</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Cancelled">Cancelled</option>
                                 </select>
                             </div>
+
                             <div class="filter-actions">
                                 <button class="filter-btn apply" id="applyButton">
                                     <i class="fas fa-filter"></i> Apply
                                 </button>
+
                             </div>
                         </div>
 
                         <div class="table-responsive">
-                            <table id="candidateTable" class="table table-striped">
+                            <table id="programsTable" class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Index </th>
-                                        <th>groomName</th>
-                                        <th>groomFather </th>
-                                        <th>groomVillage</th>
-                                        <th>groomPost </th>
-                                        <th>groomPS</th>
-                                        <th>groomDist</th>
-                                        <th>groomPin</th>
-                                        <th>groomDOB </th>
-                                        <th>brideName</th>
-                                        <th>brideFather </th>
-                                        <th>brideVillage</th>
-                                        <th>bridePost </th>
-                                        <th>bridePS</th>
-                                        <th>brideDist</th>
-                                        <th>bridePin</th>
-                                        <th>brideDOB </th>
-                                        <th>marriageDate</th>
-                                        <th>regDate</th>
-                                        <th>mohor</th>
-                                        <th>Place</th>
-                                        <th>Vol No </th>
-                                        <th>Page No </th>
+                                        <th>Sl No </th>
+
+                                        <th>Application ID</th>
+                                        <th>Student Name</th>
+                                        <th>Father Name</th>
+                                        <th>DOB</th>
+                                        <th>Gender </th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Family Income </th>
+                                        <th>State</th>
+                                        <th>Address </th>
+                                        <th>Current Class</th>
+                                        <th>Current Board</th>
+
+                                        <th>Previous Institute</th>
+                                        <th>Previous Class</th>
+                                        <th>Board Name </th>
+                                        <th>Passing Year</th>
+                                        <th>POM </th>
+                                        <th>Obtained Marks </th>
+                                        <th>DOA </th>
+
+                                        <th>Account Holder Name </th>
+                                        <th>Account Number </th>
+                                        <th>Bank Name </th>
+                                        <th>Branch Name</th>
+                                        <th>IFSC Code </th>
+                                        <th>Account Type </th>
+                                        <th>Passbook First Page </th>
+
+                                        <th>Result Upload</th>
+                                        <th>Income Certificate </th>
+                                        <th>Admission Receipt </th>
+                                        <th>Attendance Certificate </th>
+
                                         <th>Payment Status</th>
-                                        <th>Joint Photo</th>
-                                        <th> Generate Certificte</th>
-                                        <th>Action</th>
+                                        <th>Verification Status</th>
+
+                                        <th> Scholarship Status</th>
+
+
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% adminSourse.Registry.forEach((regi, index)=>{ %>
-                                        <tr data-groom='<%=regi.groomName%>' data-bride="<%=regi.brideName%>">
+
+
+                                    <% allCandidate.forEach((candidate, index)=>{ %>
+
+                                        <tr data-verification='<%=candidate.verification%>'
+                                            data-payment='<%=candidate.paymnt_status%>'>
+
                                             <td>
                                                 <%=index+1%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomName%>
+                                                <%=candidate.ApplicationId%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomFather%>
+                                                <%=candidate.studentName%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomVillage%>
+                                                <%=candidate.fatherName%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomPost%>
+                                                <%=candidate.dob%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomPS%>
+                                                <%=candidate.gender%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomDist%>
+                                                <%=candidate.email%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomPin%>
+                                                <%=candidate.mobile%>
                                             </td>
+
                                             <td>
-                                                <%=regi.groomDOB%>
+                                                <%=candidate.familyIncome%>
                                             </td>
+
+
                                             <td>
-                                                <%=regi.brideName%>
+                                                <%=candidate.state%>
                                             </td>
+
                                             <td>
-                                                <%=regi.brideFather%>
+                                                <%=candidate.fullAddress%>
                                             </td>
+
                                             <td>
-                                                <%=regi.brideVillage%>
+                                                <%=candidate.currentClass%>
                                             </td>
+
                                             <td>
-                                                <%=regi.bridePost%>
+                                                <%=candidate.currentBoard%>
                                             </td>
+
+
                                             <td>
-                                                <%=regi.bridePS%>
+                                                <%=candidate.previousInstitute%>
                                             </td>
+
                                             <td>
-                                                <%=regi.brideDist%>
+                                                <%=candidate.previousClass%>
                                             </td>
+
                                             <td>
-                                                <%=regi.bridePin%>
+                                                <%=candidate.boardName%>
                                             </td>
+
                                             <td>
-                                                <%=regi.brideDOB%>
+                                                <%=candidate.passingYear%>
                                             </td>
+
                                             <td>
-                                                <%=regi.marriageDate%>
+                                                <%=candidate.pom%>
                                             </td>
+
                                             <td>
-                                                <%=regi.regDate%>
+                                                <%=candidate.obtainedMarks%>
                                             </td>
+
                                             <td>
-                                                <%=regi.mohor%>
+                                                <%=candidate.doa%>
                                             </td>
+
                                             <td>
-                                                <%=regi.place%>
+                                                <%=candidate.accountHolderName%>
                                             </td>
+
+
                                             <td>
-                                                <%=regi.vol_no%>
+                                                <%=candidate.accountNumber%>
                                             </td>
+
                                             <td>
-                                                <%=regi.page_no%>
+                                                <%=candidate.bankName%>
                                             </td>
+
                                             <td>
-                                                <%=regi.Payment_Status%>
+                                                <%=candidate.branchName%>
                                             </td>
+
+                                            <td>
+                                                <%=candidate.ifscCode%>
+                                            </td>
+
+
+                                            <td>
+                                                <%=candidate.accountType%>
+                                            </td>
+
+
                                             <td><a class="btn btn-primary btn-sm"
-                                                    href="/download-joint-photot/<%=regi._id%>" role="button">Download
-                                                </a>
+                                                    href="/download-bank-book/<%=candidate._id%>"
+                                                    role="button">Download</a>
                                             </td>
+
                                             <td><a class="btn btn-primary btn-sm"
-                                                    href="/download-certificate/<%=regi._id%>" role="button">Generate
-                                                </a>
+                                                    href="/download-result/<%=candidate._id%>"
+                                                    role="button">Download</a>
                                             </td>
-                                            <td><a href="/view-certificate/<%=regi._id%>" role="button"><i
-                                                        class="fa-solid fa-eye"></i></a>
 
-                                                <a href="#" role="button"
-                                                    onclick="deleteCertificate('<%=regi._id%>')"><i
-                                                        class="fa-solid fa-trash"></i></a>
+                                            <td><a class="btn btn-primary btn-sm"
+                                                    href="/download-income-certificate/<%=candidate._id%>"
+                                                    role="button">Download</a>
+                                            </td>
 
-                                                <a href="/mmr-office/edit-certificate/<%=regi._id%>" role="button"><i
-                                                        class="fa-solid fa-pen-to-square"></i></a>
+                                            <td><a class="btn btn-primary btn-sm"
+                                                    href="/download-admission-receipt/<%=candidate._id%>"
+                                                    role="button">Download</a>
+                                            </td>
 
+
+                                            <td><a class="btn btn-primary btn-sm"
+                                                    href="/download-attendence/<%=candidate._id%>"
+                                                    role="button">Download</a>
+                                            </td>
+
+                                            <td>
+                                                <%=candidate.paymnt_status%>
+                                            </td>
+
+                                            <td>
+                                                <%=candidate.verification%>
+                                            </td>
+
+                                            <td>
+                                                <%=candidate.scholarship_status%>
+                                            </td>
+
+                                            <td>
+                                                <script>
+                                                    const deleteCandidate = (id) => {
+                                                        Swal.fire({
+                                                            title: "Are you sure?",
+                                                            text: "You won't be able to revert this!",
+                                                            icon: "warning",
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: "#3085d6",
+                                                            cancelButtonColor: "#d33",
+                                                            confirmButtonText: "Yes, delete it!"
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                window.location.href = `/delete-candidate/${id}`
+                                                            }
+                                                        });
+                                                    }
+
+                                                    const makePayment = (id) => {
+                                                        Swal.fire({
+                                                            title: "Are you sure?",
+                                                            text: "You won't be able to revert this!",
+                                                            icon: "warning",
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: "#3085d6",
+                                                            cancelButtonColor: "#d33",
+                                                            confirmButtonText: "Yes, Payment it!"
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                window.location.href = `/make-payment/${id}`
+                                                            }
+                                                        });
+                                                    }
+
+
+
+                                                    const verifyCandidate = (id) => {
+                                                        Swal.fire({
+                                                            title: "Are you sure?",
+                                                            text: "You won't be able to revert this!",
+                                                            icon: "warning",
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: "#3085d6",
+                                                            cancelButtonColor: "#d33",
+                                                            confirmButtonText: "Yes, verify it!"
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                window.location.href = `/make-vification/${id}`
+                                                            }
+                                                        });
+                                                    }
+
+                                                    const showRejectModal = (id) => {
+                                                        $('#rejectCandidateId').val(id);
+                                                        $('#rejectModal').modal('show');
+                                                    }
+
+                                                    const submitRejectForm = () => {
+                                                        const id = $('#rejectCandidateId').val();
+                                                        const status = $('#rejectStatus').val();
+                                                        const reason = $('#rejectReason').val();
+
+                                                        if (!reason) {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Error!',
+                                                                text: 'Please provide a rejection reason',
+                                                                confirmButtonColor: '#d33'
+                                                            });
+                                                            return;
+                                                        }
+                                                    }
+
+                                                    const showRejectForm = (button) => {
+
+                                                        document.querySelectorAll('.reject-container').forEach((r) => r.style.display = 'none')
+                                                        const form = button.nextElementSibling
+
+                                                        form.style.display = 'block'
+                                                    }
+
+
+
+                                                </script>
+
+                                                <button onclick="deleteCandidate('<%=candidate._id%>')"
+                                                    class="btn btn-dark btn-sm">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
+
+                                                <% if(candidate.verification==='Pending' ){%>
+                                                    <button onclick="verifyCandidate('<%=candidate._id%>')"
+                                                        class="btn btn-success btn-sm">
+                                                        <i class="fas fa-check-circle"></i> Verify
+                                                    </button>
+                                                    <%} %>
+
+
+
+                                                        <% if(candidate.paymnt_status==='Pending' ) {%>
+                                                            <button class="btn btn-primary btn-sm"
+                                                                onclick="makePayment('<%=candidate._id%>')">
+                                                                <i class="fas fa-credit-card"></i>
+                                                                Payment
+                                                            </button>
+                                                            <%} %>
+
+
+
+                                                                <% if (candidate.scholarship_status==='Approved' &&
+                                                                    candidate.paymnt_status==='Pending' ) { %>
+
+                                                                    <button class="btn btn-danger btn-sm"
+                                                                        onclick="showRejectForm(this)">
+                                                                        <i class="fas fa-times-circle"></i>
+                                                                        Reject
+                                                                    </button>
+
+                                                                    <% }%>
+
+                                                                        <div class="reject-container">
+                                                                            <form method="post"
+                                                                                action="/make-reject/<%=candidate._id%>"
+                                                                                class="reject-form">
+                                                                                <label class="reject-label">Reason
+                                                                                    for Rejection</label>
+                                                                                <textarea class="reject-textarea"
+                                                                                    placeholder="Please provide a clear and concise reason for rejection..."
+                                                                                    name="rejectReason"></textarea>
+                                                                                <div class="reject-submit-container">
+                                                                                    <button type="submit"
+                                                                                        class="reject-submit">
+                                                                                        Submit Rejection
+                                                                                    </button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
                                             </td>
                                         </tr>
-                                        <% })%>
+                                        <%}) %>
                                 </tbody>
                             </table>
                         </div>
@@ -1105,212 +1349,71 @@
             </main>
         </div>
 
+
+
+        <!-- Scroll to top button -->
         <button class="scroll-top">
             <i class="fas fa-arrow-up"></i>
         </button>
 
         <script>
-                $(document).ready(function () {
-                    $('#candidateTable').DataTable({
-                        responsive: true,
-                        paging: true,
-                        searching: true,
-                        info: true,
-                        autoWidth: false,
-                        lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                        dom: '<"top"lf>rt<"bottom"ip>',
-                        language: {
-                            search: "_INPUT_",
-                            searchPlaceholder: "Search programs...",
-                            lengthMenu: "Show _MENU_ entries",
-                            info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                            infoEmpty: "Showing 0 to 0 of 0 entries",
-                            infoFiltered: "(filtered from _MAX_ total entries)",
-                            paginate: {
-                                first: "First",
-                                last: "Last",
-                                next: "Next",
-                                previous: "Previous"
-                            }
+            $(document).ready(function () {
+                // Initialize DataTable with responsive settings
+                $('#programsTable').DataTable({
+                    responsive: true,
+                    paging: true,
+                    searching: true,
+                    info: true,
+                    autoWidth: false,
+                    lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    dom: '<"top"lf>rt<"bottom"ip>',
+                    language: {
+                        search: "_INPUT_",
+                        searchPlaceholder: "Search programs...",
+                        lengthMenu: "Show _MENU_ entries",
+                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                        infoEmpty: "Showing 0 to 0 of 0 entries",
+                        infoFiltered: "(filtered from _MAX_ total entries)",
+                        paginate: {
+                            first: "First",
+                            last: "Last",
+                            next: "Next",
+                            previous: "Previous"
                         }
-                    });
-
-                    $(window).scroll(function () {
-                        if ($(this).scrollTop() > 300) {
-                            $('.scroll-top').addClass('active');
-                        } else {
-                            $('.scroll-top').removeClass('active');
-                        }
-                    });
-
-                    $('.scroll-top').click(function () {
-                        $('html, body').animate({ scrollTop: 0 }, 300);
-                        return false;
-                    });
-
-                    $('[data-toggle="tooltip"]').tooltip();
-                });
-
-            const deleteCertificate = (id) => {
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = `/delete-certificate/${id}`
                     }
                 });
-            }
 
-            $('#applyButton').on('click', () => {
-                let selectedGroom = $('#groom').val();
-                let selectedBride = $('#bride').val();
-
-                $('#candidateTable tbody tr').each(function () {
-                    $(this).toggle(
-                        (selectedGroom === "" || $(this).attr('data-groom') === selectedGroom) &&
-                        (selectedBride === "" || $(this).attr('data-bride') === selectedBride)
-                    );
-                })
-            })
-
-            const allCertificates = <%- JSON.stringify(allCertificates) %>;
-            const groom = document.getElementById('groom');
-            const bride = document.getElementById('bride');
-
-            groom.addEventListener('change', (e) => {
-                let selecetdGroom = e.target.value;
-                bride.innerHTML = '<option value="">All Brides</option>'
-
-                if (selecetdGroom) {
-                    allCertificates.forEach((cer) => {
-                        if (cer.groomName === selecetdGroom) {
-                            let option = document.createElement('option');
-                            option.value = cer.brideName;
-                            option.textContent = cer.brideName;
-                            bride.appendChild(option);
-                        }
-                    })
-                }
-            })
-
-
-            const levels = <%-JSON.stringify(formalPatteernRevenue.map((r) => r.month)) %>;
-
-            const value = <%-JSON.stringify(formalPatteernRevenue.map((r) => r.revenue)) %>
-
-                document.addEventListener('DOMContentLoaded', function () {
-                    const monthlyData = {
-                        labels: levels,
-                        datasets: [{
-                            label: 'Certificates Issued',
-                            data: value,
-                            backgroundColor: 'rgba(99, 102, 241, 0.2)',
-                            borderColor: 'rgba(99, 102, 241, 1)',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            fill: true,
-                            pointBackgroundColor: 'rgba(99, 102, 241, 1)',
-                            pointRadius: 4,
-                            pointHoverRadius: 6
-                        }]
-                    };
-
-                    const config = {
-                        type: 'line',
-                        data: monthlyData,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                    labels: {
-                                        font: {
-                                            size: 14,
-                                            family: "'Inter', sans-serif"
-                                        },
-                                        padding: 20,
-                                        usePointStyle: true,
-                                        pointStyle: 'circle'
-                                    }
-                                },
-                                tooltip: {
-                                    backgroundColor: 'rgba(17, 24, 39, 0.9)',
-                                    titleFont: {
-                                        size: 14,
-                                        family: "'Inter', sans-serif",
-                                        weight: '600'
-                                    },
-                                    bodyFont: {
-                                        size: 13,
-                                        family: "'Inter', sans-serif"
-                                    },
-                                    padding: 12,
-                                    cornerRadius: 8,
-                                    displayColors: true,
-                                    usePointStyle: true,
-                                    callbacks: {
-                                        label: function (context) {
-                                            return `${context.dataset.label}: ${context.raw}`;
-                                        }
-                                    }
-                                }
-                            },
-                            scales: {
-                                x: {
-                                    grid: {
-                                        display: false,
-                                        drawBorder: false
-                                    },
-                                    ticks: {
-                                        font: {
-                                            size: 13,
-                                            family: "'Inter', sans-serif"
-                                        },
-                                        color: 'rgba(107, 114, 128, 1)'
-                                    }
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    grid: {
-                                        color: 'rgba(229, 231, 235, 1)',
-                                        drawBorder: false
-                                    },
-                                    ticks: {
-                                        font: {
-                                            size: 13,
-                                            family: "'Inter', sans-serif"
-                                        },
-                                        color: 'rgba(107, 114, 128, 1)',
-                                        callback: function (value) {
-                                            return value;
-                                        }
-                                    }
-                                }
-                            },
-                            interaction: {
-                                intersect: false,
-                                mode: 'index'
-                            },
-                            elements: {
-                                line: {
-                                    borderWidth: 2
-                                }
-                            }
-                        }
-                    };
-
-                    const ctx = document.getElementById('monthlyChart').getContext('2d');
-                    const monthlyChart = new Chart(ctx, config);
-
-                    
+                // Show/hide scroll to top button
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 300) {
+                        $('.scroll-top').addClass('active');
+                    } else {
+                        $('.scroll-top').removeClass('active');
+                    }
                 });
+
+                // Smooth scroll to top
+                $('.scroll-top').click(function () {
+                    $('html, body').animate({ scrollTop: 0 }, 300);
+                    return false;
+                });
+
+                // Initialize tooltips
+                $('[data-toggle="tooltip"]').tooltip();
+
+                // Filter functionality
+                $('#applyButton').on('click', () => {
+                    let selectedVeification = $('#verification').val();
+                    let selcetedPayment = $('#payment').val();
+
+                    $('#programsTable tbody tr').each(function () {
+                        $(this).toggle(
+                            (selectedVeification === "" || $(this).attr('data-verification') === selectedVeification) &&
+                            (selcetedPayment === "" || $(this).attr('data-payment') === selcetedPayment)
+                        );
+                    });
+                });
+            });
         </script>
     </body>
 

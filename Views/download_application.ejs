@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <title>Download Scholarship</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .download-main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .download-container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .download-app-title {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-instruction-text {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .primary-download-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .primary-download-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 600px) {
+            .download-app-title {
+                font-size: 2rem;
+            }
+
+            .download-instruction-text {
+                font-size: 1rem;
+            }
+
+            .primary-download-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%-include('home_heaer')%>
+
+        <main class="download-main-content">
+            <div class="download-container">
+
+
+                <script>
+                <% if (messages.success) { %>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: "<%= messages.success %>",
+                            confirmButtonColor: '#3085d6'
+                        });
+                <% } %>
+            
+                <% if (messages.error) { %>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: "<%= messages.error %>",
+                            confirmButtonColor: '#d33'
+                        });
+                <% } %>
+
+                </script>
+
+                <h1 class="download-app-title">Download your application 
+                </h1>
+                <p class="download-instruction-text">Click below to download the application</p>
+                <a href="/donload-button/<%=sourse._id%>" class="primary-download-button">Download Now</a>
+            </div>
+        </main>
+
+        <%-include('footer')%>
+</body>
+
+</html>

@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include('home_heaer')%>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Scholarship Status Dashboard</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <style>
+            :root {
+                --primary: #4361ee;
+                --primary-light: #4895ef;
+                --secondary: #3f37c9;
+                --success: #4cc9f0;
+                --warning: #f8961e;
+                --error: #f72585;
+                --light: #f8f9fa;
+                --dark: #212529;
+                --gray: #6c757d;
+                --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+
+            body {
+                background-color: #f5f7ff;
+                min-height: 100vh;
+                color: var(--dark);
+                line-height: 1.6;
+            }
+
+            main {
+                max-width: 1000px;
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+
+            .status-card {
+                background: white;
+                border-radius: 16px;
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+                box-shadow: var(--card-shadow);
+                border-left: 5px solid var(--primary);
+            }
+
+            .status-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.5rem;
+            }
+
+            .status-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: var(--dark);
+            }
+
+            .status-badge {
+                padding: 0.4rem 1rem;
+                border-radius: 50px;
+                font-size: 0.85rem;
+                font-weight: 600;
+            }
+
+            .badge-approved {
+                background: rgba(76, 201, 240, 0.1);
+                color: var(--success);
+                border: 1px solid var(--success);
+            }
+
+            .badge-pending {
+                background: rgba(248, 150, 30, 0.1);
+                color: var(--warning);
+                border: 1px solid var(--warning);
+            }
+
+            .badge-rejected {
+                background: rgba(247, 37, 133, 0.1);
+                color: var(--error);
+                border: 1px solid var(--error);
+            }
+
+            .status-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .detail-card {
+                background: var(--light);
+                border-radius: 10px;
+                padding: 1.2rem;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(0, 0, 0, 0.05);
+            }
+
+            .detail-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+                border-color: rgba(67, 97, 238, 0.2);
+            }
+
+            .detail-label {
+                font-size: 0.85rem;
+                color: var(--gray);
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .detail-value {
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+
+            .status-indicator {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.4rem 0.8rem;
+                border-radius: 50px;
+                font-weight: 500;
+                font-size: 0.85rem;
+                background: #f0f0f0;
+                color: #555;
+            }
+
+            .status-approved {
+                background: rgba(76, 201, 240, 0.1);
+                color: var(--success);
+                border: 1px solid var(--success);
+            }
+
+            .status-pending {
+                background: rgba(248, 150, 30, 0.1);
+                color: var(--warning);
+                border: 1px solid var(--warning);
+            }
+
+            .status-rejected {
+                background: rgba(247, 37, 133, 0.1);
+                color: var(--error);
+                border: 1px solid var(--error);
+            }
+
+            .status-disbursed {
+                background: rgba(67, 97, 238, 0.1);
+                color: var(--primary);
+                border: 1px solid var(--primary);
+            }
+
+            .alert-message {
+                background: rgba(247, 37, 133, 0.05);
+                color: var(--error);
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1.5rem;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.8rem;
+                border-left: 3px solid var(--error);
+            }
+
+            .success-message {
+                background: rgba(76, 201, 240, 0.05);
+                color: var(--success);
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1.5rem;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.8rem;
+                border-left: 3px solid var(--success);
+            }
+
+            .rejection-reason {
+                background: rgba(247, 37, 133, 0.05);
+                color: var(--error);
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1.5rem;
+                border-left: 3px solid var(--error);
+            }
+
+            .rejection-reason h3 {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .rejection-reason h3 i {
+                font-size: 1.1rem;
+            }
+
+            .rejection-reason p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+
+            .alert-message i {
+                font-size: 1.1rem;
+            }
+
+            .alert-content strong {
+                display: block;
+                margin-bottom: 0.3rem;
+                font-size: 0.95rem;
+            }
+
+            .alert-content p {
+                font-size: 0.9rem;
+            }
+
+            .action-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                margin-top: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                border-radius: 10px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+                font-size: 0.95rem;
+                border: none;
+            }
+
+            .btn-primary {
+                background: var(--primary);
+                color: white;
+                box-shadow: 0 3px 8px rgba(67, 97, 238, 0.3);
+            }
+
+            .btn-primary:hover {
+                background: var(--secondary);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 12px rgba(67, 97, 238, 0.4);
+            }
+
+            .btn-outline {
+                background: white;
+                border: 2px solid var(--primary);
+                color: var(--primary);
+            }
+
+            .btn-outline:hover {
+                background: rgba(67, 97, 238, 0.05);
+                transform: translateY(-2px);
+            }
+
+            .btn-success {
+                background: var(--success);
+                color: white;
+                box-shadow: 0 3px 8px rgba(76, 201, 240, 0.3);
+            }
+
+            .btn-success:hover {
+                background: #3ab7d8;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 12px rgba(76, 201, 240, 0.4);
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal-content {
+                background: white;
+                border-radius: 12px;
+                padding: 2rem;
+                width: 90%;
+                max-width: 400px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+                animation: modalFadeIn 0.3s ease;
+                position: relative;
+            }
+
+            @keyframes modalFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+                font-weight: 600;
+                color: var(--dark);
+            }
+
+            .close-modal {
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--gray);
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .contact-info {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .contact-item {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: rgba(67, 97, 238, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--primary);
+                font-size: 1.1rem;
+            }
+
+            .contact-text h3 {
+                font-size: 0.95rem;
+                color: var(--gray);
+                margin-bottom: 0.2rem;
+            }
+
+            .contact-text p {
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+
+            .timeline {
+                margin-top: 2rem;
+                position: relative;
+                padding-left: 1.5rem;
+            }
+
+            .timeline::before {
+                content: '';
+                position: absolute;
+                left: 7px;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: #e9ecef;
+            }
+
+            .timeline-item {
+                position: relative;
+                padding-bottom: 1.5rem;
+            }
+
+            .timeline-item:last-child {
+                padding-bottom: 0;
+            }
+
+            .timeline-dot {
+                position: absolute;
+                left: -1.5rem;
+                top: 0;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: var(--gray);
+            }
+
+            .timeline-dot.active {
+                background: var(--primary);
+                box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            }
+
+            .timeline-dot.completed {
+                background: var(--success);
+                box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+            }
+
+            .timeline-content {
+                padding-left: 1rem;
+            }
+
+            .timeline-date {
+                font-size: 0.8rem;
+                color: var(--gray);
+                margin-bottom: 0.3rem;
+            }
+
+            .timeline-title {
+                font-weight: 600;
+                margin-bottom: 0.3rem;
+            }
+
+            .timeline-desc {
+                font-size: 0.9rem;
+                color: var(--gray);
+            }
+
+            @media (max-width: 600px) {
+                .status-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .action-buttons {
+                    flex-direction: column;
+                }
+
+                .btn {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+        </style>
+</head>
+
+<body>
+    <main>
+        <div class="status-card">
+            <div class="status-header">
+                <h2 class="status-title">Scholarship Application Status</h2>
+                <% if(sourse.scholarship_status.trim()==='Approved' ) { %>
+                    <span class="status-badge badge-approved">Approved</span>
+                    <% } else if(sourse.scholarship_status.trim()==='Pending' ) { %>
+                        <span class="status-badge badge-pending">Pending Review</span>
+                        <% } else if(sourse.scholarship_status.trim()==='Rejected' ) { %>
+                            <span class="status-badge badge-rejected">Rejected</span>
+                            <% } %>
+            </div>
+
+            <div class="status-grid">
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-hashtag"></i>
+                        Application ID
+                    </div>
+                    <div class="detail-value">
+                        <%=sourse.ApplicationId%>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-user"></i>
+                        Student Name
+                    </div>
+                    <div class="detail-value">
+                        <%=sourse.studentName%>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-calendar-alt"></i>
+                        Applied On
+                    </div>
+                    <div class="detail-value">
+                        <%=sourse.doa%>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-check-circle"></i>
+                        Verification
+                    </div>
+                    <div class="detail-value">
+                        <% if(sourse.verification.trim()==='Verified' ) { %>
+                            <span class="status-indicator status-approved">
+                                <i class="fas fa-check-circle"></i> Verified
+                            </span>
+                            <% } else if(sourse.verification.trim()==='Pending' ) { %>
+                                <span class="status-indicator status-pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                                <% } else { %>
+                                    <span class="status-indicator">
+                                        <i class="fas fa-question-circle"></i>
+                                        <%=sourse.verification%>
+                                    </span>
+                                    <% } %>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-award"></i>
+                        Scholarship Status
+                    </div>
+                    <div class="detail-value">
+                        <% if(sourse.scholarship_status.trim()==='Approved' ) { %>
+                            <span class="status-indicator status-approved">
+                                <i class="fas fa-check-circle"></i> Approved
+                            </span>
+                            <% } else if(sourse.scholarship_status.trim()==='Pending' ) { %>
+                                <span class="status-indicator status-pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                                <% } else if(sourse.scholarship_status.trim()==='Rejected' ) { %>
+                                    <span class="status-indicator status-rejected">
+                                        <i class="fas fa-times-circle"></i> Rejected
+                                    </span>
+                                    <% } else { %>
+                                        <span class="status-indicator">
+                                            <i class="fas fa-question-circle"></i>
+                                            <%=sourse.scholarship_status%>
+                                        </span>
+                                        <% } %>
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <div class="detail-label">
+                        <i class="fas fa-wallet"></i>
+                        Payment Status
+                    </div>
+                    <div class="detail-value">
+                        <% if( sourse.paymnt_status.trim()==='Success' ) { %>
+                            <span class="status-indicator status-disbursed">
+                                <i class="fas fa-check-circle"></i> Success
+                            </span>
+                            <% } else if(sourse.paymnt_status.trim()==='Pending' ) { %>
+                                <span class="status-indicator status-pending">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                                <% } else { %>
+                                    <span class="status-indicator">
+                                        <i class="fas fa-question-circle"></i>
+                                        <%=sourse.paymnt_status%>
+                                    </span>
+                                    <% } %>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <% if(sourse.scholarship_status.trim()==='Rejected' ) { %>
+                <div class="rejection-reason">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Reason for Rejection</h3>
+                    <p>
+                        <%=sourse.reject_reason%>
+                    </p>
+
+                </div>
+                <% } %>
+
+
+        </div>
+
+
+    </main>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div class="modal-header">
+                <h3 class="modal-title">Contact Support</h3>
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Email us at</h3>
+                        <p>support@scholarshipportal.edu</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Call us at</h3>
+                        <p>+1 (800) 123-4567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Support Hours</h3>
+                        <p>Monday-Friday, 9AM-5PM EST</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Visit Us</h3>
+                        <p>123 Scholarship Ave, Education City</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%-include('footer')%>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const cards = document.querySelectorAll('.detail-card, .timeline-item');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(15px)';
+                    card.style.transition = `all 0.3s ease ${index * 0.1}s`;
+
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                });
+
+                const helpBtn = document.getElementById('helpBtn');
+                const helpModal = document.getElementById('helpModal');
+                const closeModal = document.getElementById('closeModal');
+                const downloadBtn = document.getElementById('downloadBtn');
+                const receiptBtn = document.getElementById('receiptBtn');
+
+                if (helpBtn) {
+                    helpBtn.addEventListener('click', function () {
+                        helpModal.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    });
+                }
+
+                if (closeModal) {
+                    closeModal.addEventListener('click', function () {
+                        helpModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+
+                window.addEventListener('click', function (event) {
+                    if (event.target === helpModal) {
+                        helpModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+
+            });
+        </script>
+</body>
+
+</html>

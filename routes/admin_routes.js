@@ -1,63 +1,40 @@
 const express = require('express');
-const multer = require('multer')
 const route = express.Router();
-const path = require('path')
+const { logout, makeReject, makeApprove, makePayment, makeVerification, deleteCandidate, downloadAttendence, downlodAdmissionReceipt, downloadIncome, resultDownlod, downloadbankBook, adminDashboard, adminSignup, adminLogin, adminLoginPost } = require('../controllers/admin_controllers')
+
 const auth = require('../auth/admin_auth')
-const { editCertificatePost, editCertificate, resetPasswordPost, resetPassword, forgetPasswordPost, forgetPassword, editProfilePost, editProfile, downloadAllRegistryexcel, deleteCertificate, viewCertificate, downloadCertificate, downloadJointPhoto, newCertificatePost, newCertificate, adminDashboard, adminLoginPost, adminLogin, adminSignup } = require('../controllers/admin_controllers')
 
+route.get('/pragatischolarship/admin-login', adminLogin);
 
-route.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-const storage = multer.diskStorage({
-    limits: { fileSize: 10000000 },
-    destination: function (req, file, cb) {
-        cb(null, './uploads')
-    },
+route.post('/pragatischolarship/admin-login', adminLoginPost)
 
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const fileExtension = path.extname(file.originalname);
-        cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
-    }
-})
+route.post('/pragatischolarship/admin-sinup', adminSignup);
 
-const upload = multer({ storage: storage })
+route.get('/pragatischolarship/admin-dashboard', auth, adminDashboard);
 
+route.get('/download-bank-book/:id', downloadbankBook);
 
-route.get('/mmr-office/admin-login', adminLogin)
+route.get('/download-result/:id', resultDownlod);
 
-route.post('/mmr-office/admin-signup', upload.single('Profile_Image'), adminSignup)
+route.get('/download-income-certificate/:id', downloadIncome);
 
-route.post('/mmr-office/admin-login', adminLoginPost);
+route.get('/download-admission-receipt/:id', downlodAdmissionReceipt);
 
-route.get('/mmr-office-admin-dashboard', auth, adminDashboard)
+route.get('/download-attendence/:id', downloadAttendence)
 
-route.get('/mmr-office/new-certificate', auth, newCertificate)
-route.post('/mmr-office/new-certificate', upload.single('Joint_Photo'), auth, newCertificatePost);
+route.get('/delete-candidate/:id', deleteCandidate);
 
-route.get('/download-joint-photot/:id', downloadJointPhoto);
+route.get('/make-vification/:id', makeVerification);
 
-route.get('/download-certificate/:id', downloadCertificate);
+route.get('/make-payment/:id', makePayment);
 
-route.get('/view-certificate/:id', viewCertificate);
+route.get('/make-approve/:id', makeApprove);
 
-route.get('/delete-certificate/:id', deleteCertificate);
+route.post('/make-reject/:id', makeReject);
 
-route.get('/dowload-allRegistry', downloadAllRegistryexcel)
-
-route.get('/mmr-office/edit-profile', auth, editProfile);
-route.post('/mmr-office/edit-profile', auth, editProfilePost);
-
-route.get('/mmr-office/edit-certificate/:id', editCertificate)
-route.post('/mmr-office/edit-certificate/:id', upload.single('Joint_Photo'), editCertificatePost)
-
-
-route.get('/mmr-office/forget-password', forgetPassword)
-route.post('/mmr-office/forget-password', forgetPasswordPost)
-
-route.get('/mmr-office/reset-password/:id', resetPassword)
-route.post('/mmr-office/reset-password/:id', resetPasswordPost)
+route.get('/logout', logout)
 
 
 
 
-module.exports = route
+module.exports = route;

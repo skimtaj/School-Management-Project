@@ -605,7 +605,7 @@
                         <img src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764.jpg?semt=ais_hybrid&w=740"
                             alt="Admin" class="profile-img">
                         <span class="profile-name">
-                            <%=adminDetail.Name%>
+                            <%=admin.Name%>
                         </span>
                         <i class="fas fa-chevron-down profile-arrow"></i>
                     </button>
@@ -615,7 +615,7 @@
                                 alt="Admin" class="profile-popup-img">
                             <div class="profile-info">
                                 <h4>
-                                    <%=adminDetail.Name%>
+                                    <%=admin.Name%>
                                 </h4>
                                 <p> Administrator</p>
                             </div>
@@ -624,24 +624,16 @@
                             <div class="profile-detail">
                                 <i class="fas fa-envelope"></i>
                                 <span>
-                                    <%=adminDetail.Email%>
+                                    <%=admin.Email%>
                                 </span>
                             </div>
-                            <div class="profile-detail">
-                                <i class="fas fa-phone"></i>
-                                <span>
-                                    <%=adminDetail.Mobile%>
-                                </span>
-                            </div>
+                           
 
                         </div>
                         <div class="profile-actions">
-                            <a href="/mmr-office/edit-profile" class="profile-action-btn">
-                                <i class="fas fa-user-cog"></i>
-                                <span>Profile Settings</span>
-                            </a>
 
-                            <a href="#" class="profile-action-btn logout">
+
+                            <a href="/logout" class="profile-action-btn logout">
                                 <i class="fas fa-sign-out-alt"></i>
                                 <span>Logout</span>
                             </a>
