@@ -1,294 +1,205 @@
-require('dotenv').config();
-const path = require('path');
-const cookieParser = require('cookie-parser');
+
+const path = require('path')
+const admin_credential = require("../models/admin_credential");
+const bcryptjs = require('bcryptjs');
+const cookieParser = require('cookie-parser')
 const express = require('express');
+const survey_form = require("../models/survey_form");
 const app = express();
+
 app.use(cookieParser());
-const nodemailer = require('nodemailer');
-const bcryptjs = require('bcryptjs')
-const admin_credential_model = require("../models/admin_credential_model");
-const Scholarship_model = require('../models/Scholarship_model');
 
 
 const adminLogin = (req, res) => {
+
     res.render('../Views/admin_credential')
+}
+
+const adminSignupPost = async (req, res) => {
+
+    const adminData = req.body;
+
+    if (adminData.Password !== adminData.confirmPassword) {
+
+        req.flash('error', 'Password is not matching');
+        return res.redirect('/ai-survey-form/admin-login')
+    };
+
+    const matchEmail = await admin_credential.findOne({ Email: adminData.Email });
+
+    if (matchEmail) {
+        req.flash('error', 'Email already exist');
+        return res.redirect('/ai-survey-form/admin-login')
+    }
+
+    const new_admin_model = admin_credential(adminData);
+    await new_admin_model.save();
+
+    console.log(new_admin_model)
+
+    req.flash('success', 'Signup Successfully');
+    return res.redirect('/ai-survey-form/admin-login')
+
 }
 
 const adminLoginPost = async (req, res) => {
 
     const { Email, Password } = req.body;
-    const matchEmail = await admin_credential_model.findOne({ Email: Email })
+
+    const matchEmail = await admin_credential.findOne({ Email: Email });
 
     if (matchEmail) {
+
         const matchPassword = await bcryptjs.compare(Password, matchEmail.Password);
 
         if (matchPassword) {
 
-            const token = await matchEmail.generateAdminToken();
+            const token = await matchEmail.adminTokenGenerate();
 
             res.cookie('adminToken', token), {
-
                 httpOnly: true,
                 secure: true,
                 maxAge: 365 * 24 * 60 * 60 * 1000,
             }
 
-            return res.redirect('/pragatischolarship/admin-dashboard')
+            return res.redirect('/ai-survey-form/admin-dashboard')
         }
 
         else {
-            req.flash('error', 'Incorrect Email Or Password');
-            return res.redirect('/pragatischolarship/admin-login')
+
+            req.flash('error', 'Invalid Email or Password');
+            return res.redirect('/ai-survey-form/admin-login')
         }
+
     }
 
     else {
-        req.flash('error', 'Invalid Login Details');
-        return res.redirect('/pragatischolarship/admin-login')
-    }
-}
 
-const adminSignup = async (req, res) => {
-
-    const adminSignupData = req.body;
-    const new_admin_model = admin_credential_model(adminSignupData);
-    await new_admin_model.save();
-
-    if (adminSignupData.Password !== adminSignupData.confirmPassword) {
-
-        req.flash('error', 'Passwords do not match. Please try again.');
-        return res.redirect('/pragatischolarship/admin-login')
+        req.flash('error', 'Invalid login Credential ');
+        return res.redirect('/ai-survey-form/admin-login')
     }
 
-    req.flash('success', `Signup successful. Welcome, ${new_admin_model.Name}!`);
-    return res.redirect('/pragatischolarship/admin-login')
 
 }
 
 const adminDashboard = async (req, res) => {
 
-    const adminSourse = await admin_credential_model.findById(req.adminId)
+    const adminSourse = await admin_credential.findById(req.adminId);
 
-    const allCandidate = await Scholarship_model.find().sort({ _id: -1 });
-    const totalCandidates = allCandidate.length;
-    const PaymentCandidates = await allCandidate.filter((c) => c.paymnt_status === 'Success');
-    const allPaymentCandidates = PaymentCandidates.length;
+    const allSurveyData = await survey_form.find();
 
-    const allApprovedCandidates = await allCandidate.filter((c) => c.scholarship_status === 'Approved');
-    const totalApprovedCandidates = allApprovedCandidates.length;
+    const totalcandidate = allSurveyData.length;
 
-    const allRejectedCandidates = allCandidate.filter((c) => c.scholarship_status === 'Rejected');
-    const totalRejectedCandidates = allRejectedCandidates.length;
-
-    res.render('../Views/admin_dashboard', { adminSourse, totalRejectedCandidates, allCandidate, totalCandidates, allPaymentCandidates, totalApprovedCandidates })
+    res.render('../Views/admin_dashboard', { allSurveyData, adminSourse, totalcandidate })
 }
-
-const downloadbankBook = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    const bookPath = path.join(__dirname, '../uploads', sourse.passbookFirstPage);
-    res.download(bookPath);
-
-}
-
-const resultDownlod = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    const resultPath = path.join(__dirname, '../uploads', sourse.resultUpload);
-    res.download(resultPath)
-}
-
-const downloadIncome = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    const incomePath = path.join(__dirname, '../uploads', sourse.incomeCertificate);
-    res.download(incomePath);
-
-}
-
-const downlodAdmissionReceipt = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    const admissionPath = path.join(__dirname, '../uploads', sourse.admissionReceipt);
-    res.download(admissionPath);
-
-
-}
-
-const downloadAttendence = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    const attendencePath = path.join(__dirname, '../uploads', sourse.attendanceCertificate);
-    res.download(attendencePath);
-
-}
-
-const deleteCandidate = async (req, res) => {
-
-    await Scholarship_model.findByIdAndDelete(req.params.id);
-    req.flash('success', 'Candidate deleted successfully');
-    return res.redirect('/pragatischolarship/admin-dashboard')
-
-}
-
-const makeVerification = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    sourse.verification = 'Verified';
-    sourse.scholarship_status = 'Approved'
-    await sourse.save();
-
-
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.User,
-            pass: process.env.Pass
-        }
-    });
-
-    let mailOptions = {
-        from: process.env.User,
-        to: sourse.email,
-        subject: 'Scholarship Verification',
-        text: `Dear ${sourse.studentName}! \nYour Application is verified.`
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-
-    req.flash('success', 'candidate verified successfully');
-    return res.redirect('/pragatischolarship/admin-dashboard')
-
-}
-
-const makePayment = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    sourse.paymnt_status = 'Success';
-    sourse.scholarship_status = 'Approved'
-    await sourse.save();
-
-
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.User,
-            pass: process.env.Pass
-        }
-    });
-
-    let mailOptions = {
-        from: process.env.User,
-        to: sourse.email,
-        subject: 'Scholarship Verification',
-        text: `Dear ${sourse.studentName}! \nyour scholarship payment has been sent successfully`
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-
-    req.flash('success', 'Payment complete succcessfully');
-    return res.redirect('/pragatischolarship/admin-dashboard')
-
-}
-
-const makeApprove = async (req, res) => {
-
-    const sourse = await Scholarship_model.findById(req.params.id);
-    sourse.scholarship_status = 'Approved';
-    await sourse.save();
-
-
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.User,
-            pass: process.env.Pass
-        }
-    });
-
-    let mailOptions = {
-        from: process.env.User,
-        to: sourse.email,
-        subject: 'Scholarship Verification',
-        text: `Dear ${sourse.studentName}! \nyour scholarship application has been approved.`
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-    req.flash('success', 'Candidate approved successfully');
-    return res.redirect('/pragatischolarship/admin-dashboard')
-}
-
-const makeReject = async (req, res) => {
-
-
-    const { rejectReason } = req.body;
-    const sourse = await Scholarship_model.findById(req.params.id);
-
-    sourse.scholarship_status = 'Rejected';
-    sourse.reject_reason = rejectReason;
-    await sourse.save();
-
-
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.User,
-            pass: process.env.Pass
-        }
-    });
-
-    let mailOptions = {
-        from: process.env.User,
-        to: sourse.email,
-        subject: 'Scholarship Verification',
-        text: `Dear ${sourse.studentName}! \nyour scholarship application has been rejected because of ${rejectReason}.`
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-
-    console.log(sourse)
-
-    req.flash('success', 'candidate rejected successfuly');
-    return res.redirect('/pragatischolarship/admin-dashboard')
-
-}
-
 
 const logout = (req, res) => {
 
     res.clearCookie('adminToken');
-    req.flash('success', 'Logout Successfuly');
-    return res.redirect('/pragatischolarship/admin-login')
+    req.flash('success', 'You are logout successfully');
+    return res.redirect('/ai-survey-form/admin-login')
+
+}
+
+const downloadsafetyFile = async (req, res) => {
+
+    const sourse = await survey_form.findById(req.params.id)
+
+
+    if (!sourse.ai_safety_reason_file) {
+        req.flash('error', 'No file found for this survey form')
+        return res.redirect('/ai-survey-form/admin-dashboard')
+    }
+
+    const filepath = path.join(__dirname, '../uploads', sourse.ai_safety_reason_file);
+    res.download(filepath);
+}
+
+const downloadJobFile = async(req, res) => {
+
+    const sourse = await survey_form.findById(req.params.id);
+
+    if (!sourse.ai_jobs_reason_file) {
+
+        req.flash('error', 'No file found for this survey form');
+        return res.redirect('/ai-survey-form/admin-dashboard')
+    }
+    const filepath = path.join(__dirname, '../uploads', sourse.ai_jobs_reason_file);
+    res.download(filepath);
+
+}
+
+const downloadCorrectFile = async (req, res) => {
+
+
+    const sourse = await survey_form.findById(req.params.id);
+
+    if (!sourse.ai_correct_reason_file) {
+
+        req.flash('error', 'No file found for this survey form');
+        return res.redirect('/ai-survey-form/admin-dashboard')
+    }
+    const filepath = path.join(__dirname, '../uploads', sourse.ai_correct_reason_file);
+    res.download(filepath);
+
+
+}
+
+const downloadEducationFile = async (req, res) => {
+
+    const sourse = await  survey_form.findById(req.params.id);
+
+    if (!sourse.ai_education_reason_file) {
+
+        req.flash('error', 'No file found for this survey form');
+        return res.redirect('/ai-survey-form/admin-dashboard')
+    }
+    const filepath = path.join(__dirname, '../uploads', sourse.ai_education_reason_file);
+    res.download(filepath);
+
+}
+
+const downloadTrustFile = async (req, res) => {
+
+
+    const sourse = await survey_form.findById(req.params.id);
+
+    if (!sourse.ai_trust_reason_file) {
+
+        req.flash('error', 'No file found for this survey form');
+        return res.redirect('/ai-survey-form/admin-dashboard')
+    }
+    const filepath = path.join(__dirname, '../uploads', sourse.ai_trust_reason_file);
+    res.download(filepath);
+
+
+}
+
+const deleteSurvey = async (req, res) => {
+
+    await survey_form.findByIdAndDelete(req.params.id);
+    req.flash('success', 'Survey deleted successfully');
+    return res.redirect('/ai-survey-form/admin-dashboard')
+
+}
+
+const surveyResponse = async (req, res) => {
+
+    const { response } = req.body
+
+    const sourse = await survey_form.findById(req.params.id);
+    sourse.Feedback = response;
+
+    sourse.Response_Status = 'Responed'
+    await sourse.save();
+
+
+    req.flash('success', 'Response submitted successfuly');
+    return res.redirect('/ai-survey-form/admin-dashboard')
+
+
 }
 
 
 
-module.exports = { logout, makeReject, makeApprove, makePayment, makeVerification, deleteCandidate, downloadAttendence, downlodAdmissionReceipt, downloadIncome, resultDownlod, downloadbankBook, adminDashboard, adminSignup, adminLogin, adminLoginPost }
+module.exports = { surveyResponse, deleteSurvey, downloadTrustFile, downloadEducationFile, downloadCorrectFile, downloadJobFile, downloadsafetyFile, logout, adminDashboard, adminLoginPost, adminLogin, adminSignupPost };

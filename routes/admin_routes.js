@@ -1,40 +1,39 @@
 const express = require('express');
 const route = express.Router();
-const { logout, makeReject, makeApprove, makePayment, makeVerification, deleteCandidate, downloadAttendence, downlodAdmissionReceipt, downloadIncome, resultDownlod, downloadbankBook, adminDashboard, adminSignup, adminLogin, adminLoginPost } = require('../controllers/admin_controllers')
-
 const auth = require('../auth/admin_auth')
 
-route.get('/pragatischolarship/admin-login', adminLogin);
+const { surveyResponse, deleteSurvey, downloadTrustFile, downloadEducationFile, downloadCorrectFile, downloadJobFile, downloadsafetyFile, logout, adminDashboard, adminLoginPost, adminLogin, adminSignupPost } = require('../controllers/admin_controllers')
 
-route.post('/pragatischolarship/admin-login', adminLoginPost)
+route.get('/ai-survey-form/admin-login', adminLogin);
 
-route.post('/pragatischolarship/admin-sinup', adminSignup);
+route.post('/ai-survey-form/admin-login', adminLoginPost);
 
-route.get('/pragatischolarship/admin-dashboard', auth, adminDashboard);
 
-route.get('/download-bank-book/:id', downloadbankBook);
+route.post('/ai-survey-form/admin-signup', adminSignupPost);
 
-route.get('/download-result/:id', resultDownlod);
+route.get('/ai-survey-form/admin-dashboard', auth, adminDashboard);
 
-route.get('/download-income-certificate/:id', downloadIncome);
+route.get('/download-safety-file/:id', downloadsafetyFile);
 
-route.get('/download-admission-receipt/:id', downlodAdmissionReceipt);
+route.get('/download-job-file/:id', downloadJobFile)
 
-route.get('/download-attendence/:id', downloadAttendence)
+route.get('/download-corrcet-file/:id', downloadCorrectFile)
 
-route.get('/delete-candidate/:id', deleteCandidate);
+route.get('/download-education-file/:id', downloadEducationFile)
 
-route.get('/make-vification/:id', makeVerification);
+route.get('/download-trust-file/:id', downloadTrustFile);
 
-route.get('/make-payment/:id', makePayment);
+route.get('/delete-survey/:id', deleteSurvey);
 
-route.get('/make-approve/:id', makeApprove);
+route.post('/survey-response/:id', surveyResponse)
 
-route.post('/make-reject/:id', makeReject);
+
+
+
+
+
 
 route.get('/logout', logout)
 
 
-
-
-module.exports = route;
+module.exports = route

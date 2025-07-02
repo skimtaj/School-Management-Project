@@ -1,12 +1,9 @@
 const express = require('express');
 const route = express.Router();
 const multer = require('multer');
-const path = require('path')
+const path = require('path');
 
-const { awardLetter, downloadButton, applicationStatus, trackApplication, downloadAppliction, trackApplicationPost, applyScholarshipPost, home, applyScholarship } = require('../controllers/user_controllers')
-
-
-route.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+route.use('/Upload', express.static(path.join(__dirname, 'uploads')));
 
 const storage = multer.diskStorage({
     limits: { fileSize: 10000000 },
@@ -20,25 +17,19 @@ const storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
     }
 })
+
 const upload = multer({ storage: storage })
 
 
-const uploadMiddleware = upload.fields([{ name: 'passbookFirstPage', maxCount: 1 }, { name: 'resultUpload', maxCount: 1 }, { name: 'incomeCertificate', maxCount: 8 }, { name: 'admissionReceipt', maxCount: 1 }, { name: 'attendanceCertificate', maxCount: 8 }])
 
-route.get('/pragatischolarship', home);
+const { serverForm, serverFormPost } = require('../controllers/user_controllers')
 
-route.get('/pragatischolarship/apply-scholarship', uploadMiddleware, applyScholarship)
-route.post('/pragatischolarship/apply-scholarship', uploadMiddleware, applyScholarshipPost);
 
-route.get('/pragatischolarship/track-application', trackApplication);
-route.post('/pragatischolarship/track-application', trackApplicationPost);
+route.get('/ai-survey-form', serverForm)
 
-route.get('/pragatischolarship/download-application/:id', downloadAppliction);
+const uploadMiddleware = upload.fields([{ name: 'ai_safety_reason_file', maxCount: 1 }, { name: 'ai_jobs_reason_file', maxCount: 8 }, { name: 'ai_correct_reason_file', maxCount: 1 }, { name: 'ai_education_reason_file', maxCount: 1 }, { name: 'ai_trust_reason_file', maxCount: 1 }])
 
-route.get('/pragatischolarship/application-status/:id', applicationStatus);
+route.post('/ai-survey-form', uploadMiddleware, serverFormPost);
 
-route.get('/donload-button/:id', downloadButton);
-
-route.get('/award-download-letter/:id', awardLetter)
 
 module.exports = route;

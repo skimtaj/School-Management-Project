@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Solutions | AI Impact Survey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --primary-color: #2563EB;
+            --primary-dark: #1D4ED8;
+            --primary-light: #3B82F6;
+            --accent-color: #1E40AF;
+            --accent-dark: #1E3A8A;
+            --accent-light: #3B82F6;
+            --secondary-color: #10B981;
+            --secondary-dark: #059669;
+            --text-light: #F9FAFB;
+            --text-dark: #111827;
+            --text-muted: #6B7280;
+            --background-light: #F9FAFB;
+            --background-dark: #E5E7EB;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --error-color: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%239C92AC" fill-opacity="0.05" fill-rule="evenodd"/%3E%3C/svg%3E');
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.5;
+            font-weight: 400;
+            padding-top: 80px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Modern Cursor Effect */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            opacity: 0.2;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: multiply;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--primary-color);
+            opacity: 0.3;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease-out;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        header.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 55px;
+            width: auto;
+        }
+
+        .admin-login {
+            display: flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+            gap: 8px;
+            font-size: 0.875rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .admin-login:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-image {
+            width: 100%;
+            height: 100%;
+            max-height: 350px;
+            /* Keep this if you want to limit height */
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            /* This keeps the aspect ratio while covering */
+        }
+
+        .form-section {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .form-section:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .form-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .form-section h3 {
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--background-dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--background-dark);
+            border-radius: 6px;
+            font-size: 0.9200rem;
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236B7280' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px 12px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group .error-message {
+            color: var(--error-color);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .form-group.invalid input,
+        .form-group.invalid textarea,
+        .form-group.invalid select {
+            border-color: var(--error-color);
+        }
+
+        .form-group.invalid .error-message {
+            display: block;
+        }
+
+        .file-upload {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .file-upload-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px dashed var(--background-dark);
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            transition: var(--transition);
+            background-color: #f9fafb;
+            cursor: pointer;
+        }
+
+        .file-upload-input:hover {
+            border-color: var(--primary-color);
+            background-color: #f0f4ff;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .file-upload-label i {
+            color: var(--primary-color);
+        }
+
+        .file-name {
+            margin-top: 0.5rem;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        /* Modern Progress Bar */
+        .progress-container {
+            width: 100%;
+            margin: 1.5rem 0 2.5rem;
+            position: relative;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background-color: var(--background-dark);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+            transition: width 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.8) 0%,
+                    rgba(255, 255, 255, 0) 50%);
+            animation: shimmer 2s infinite;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        .progress-step {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--background-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .progress-step.completed {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -50%;
+            right: 50%;
+            height: 2px;
+            background: var(--background-dark);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step:first-child::before {
+            display: none;
+        }
+
+        .progress-step.completed::before,
+        .progress-step.active~.progress-step.completed::before {
+            background: var(--secondary-color);
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Boolean Options - Side by Side */
+        .boolean-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .boolean-option {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .boolean-option input {
+            display: none;
+        }
+
+        .boolean-option label {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            background: white;
+            border: 1px solid var(--background-dark);
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            height: auto;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boolean-option input:checked+label {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-dark);
+            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+        }
+
+        .boolean-option:hover label {
+            border-color: var(--primary-light);
+        }
+
+        .boolean-options.invalid {
+            position: relative;
+        }
+
+        .boolean-options.invalid::after {
+            content: 'This field is required';
+            color: var(--error-color);
+            font-size: 0.75rem;
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+        }
+
+        /* Buttons */
+        .submit-btn,
+        .next-btn,
+        .prev-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9375rem;
+            transition: var(--transition);
+            font-weight: 500;
+            margin-top: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
+        }
+
+        .submit-btn:hover,
+        .next-btn:hover,
+        .prev-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .prev-btn {
+            background-color: var(--text-muted);
+            margin-right: 1rem;
+        }
+
+        .prev-btn:hover {
+            background-color: #5B6B79;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .question-section {
+            display: none;
+        }
+
+        .question-section.active {
+            display: block;
+        }
+
+        footer {
+            background-color: #111827;
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            margin-top: auto;
+            border-top: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.875rem;
+            font-weight: 400;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            font-size: 0.8125rem;
+            opacity: 0.7;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            header {
+                padding: 0.75rem 1.5rem;
+            }
+
+            .logo img {
+                height: 36px;
+            }
+
+            .admin-login {
+                padding: 0.5rem 1rem;
+                font-size: 0.8125rem;
+            }
+
+            .form-section {
+                padding: 1.75rem;
+            }
+
+            .form-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .boolean-options {
+                gap: 0.5rem;
+            }
+
+            .boolean-option {
+                min-width: calc(33.33% - 0.5rem);
+            }
+
+            .boolean-option label {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.8rem;
+                min-height: 38px;
+            }
+
+            .progress-step {
+                width: 20px;
+                height: 20px;
+                font-size: 0.65rem;
+            }
+
+            .button-group {
+                flex-direction: row;
+            }
+
+            .prev-btn {
+                margin-right: 1rem;
+                margin-bottom: 0;
+            }
+
+            .submit-btn,
+            .next-btn,
+            .prev-btn {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .boolean-option {
+                min-width: 100%;
+            }
+
+            .button-group {
+                flex-direction: row !important;
+            }
+
+            .prev-btn {
+                margin-right: 0.5rem;
+                margin-bottom: 0;
+            }
+
+            .form-image {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-section h2 {
+
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor Elements -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <header id="mainHeader">
+        <div class="logo">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiL595CKsA4F87yIpXObN_ElMJVoYPL1CT-GkCI1c4DtYAQA4xHc080zhuftPKqQYv7iDd0NtY8HV6WfqdQQUArqR9CkOuMVtk5crnx0s4Dcd4jx77QVS1MBT2ZMUx4m4VQz-M4_zsvkzTD0FUhtRJ0E3eMM1PqRbemUDPBKptJhC_LfS3WDmr0lSDOz-xW/w640-h194/New%20Logo%20.png"
+                alt="AI Solutions Logo">
+        </div>
+        <a href="#" class="admin-login">
+            <i class="fas fa-user-shield"></i>
+            User Login
+        </a>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="form-section">
+                <!-- Form Image Inside Section -->
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_XQ-7OMPYV_4dvQkWbqoUU8xYvVCq5p3I4VdmeHYZ1jsWhp8aJ6DjFwEkWZKAtzXd5s_sC-xunl7Ouxfu-pyjr2A3d91gPNC8-Lgou2-_51omfVm9GjK1nG2SAth8Qy7Vs9uvIp6L6bxI3b9IwqYOKcRlvjkLQ4JxoaVmiDrv796pdYuAtSc12LMgshoU/w640-h360/WhatsApp%20Image%202025-07-02%20at%202.27.54%20PM.jpeg"
+                    alt="AI Impact Survey" class="form-image">
+
+                <h2>AI IMPACT SURVEY - 2025</h2>
+                <p class="form-subtitle">Share your experience with artificial intelligence in your professional field
+                </p>
+
+                <!-- Modern Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div class="progress-bar" id="progressBar" style="width: 16.66%"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <div class="progress-step active">1</div>
+                        <div class="progress-step">2</div>
+                        <div class="progress-step">3</div>
+                        <div class="progress-step">4</div>
+                        <div class="progress-step">5</div>
+                        <div class="progress-step">6</div>
+                    </div>
+                </div>
+
+
+
+                <script>
+                <% if (messages.success) { %>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: "<%= messages.success %>",
+                            confirmButtonColor: '#3085d6'
+                        });
+                <% } %>
+            
+                <% if (messages.error) { %>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: "<%= messages.error %>",
+                            confirmButtonColor: '#d33'
+                        });
+                <% } %>
+
+                </script>
+
+
+
+
+
+                <!-- Personal Information Section -->
+
+
+                <form method="post" action="/ai-survey-form" enctype="multipart/form-data">
+
+                    <div id="personalInfo" class="question-section active">
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label for="name">Full Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                            <div class="error-message">Please enter your full name</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="Enter your professional email"
+                                required>
+                            <div class="error-message">Please enter a valid email address</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profession">Profession <span class="required">*</span></label>
+                            <select id="profession" name="profession" required>
+                                <option value="" disabled selected>Select your profession</option>
+                                <option value="it">IT/Technology</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="finance">Finance/Banking</option>
+                                <option value="education">Education</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="design">Design/Creative</option>
+                                <option value="research">Research</option>
+                                <option value="government">Government</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="error-message">Please select your profession</div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="next-btn" onclick="nextSection('personalInfo', 'question1')">
+                                Next <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 1 -->
+                    <div id="question1" class="question-section">
+                        <h3>AI Safety</h3>
+                        <div class="form-group">
+                            <label>Is AI safe to use? <span class="required">*</span></label>
+                            <div class="boolean-options" id="ai-safety-options">
+                                <div class="boolean-option">
+                                    <input type="radio" id="safe-yes" name="ai_safety" value="yes" required>
+                                    <label for="safe-yes">Yes</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="safe-no" name="ai_safety" value="no">
+                                    <label for="safe-no">No</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="safe-sometimes" name="ai_safety" value="sometimes">
+                                    <label for="safe-sometimes">Sometimes</label>
+                                </div>
+                            </div>
+                            <div class="error-message">Please select an option</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason1">Please explain your answer <span class="required">*</span></label>
+                            <textarea id="reason1" name="ai_safety_reason"
+                                placeholder="Explain why you think AI is safe or not safe..." required></textarea>
+                            <div class="error-message">Please explain your answer</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload supporting document (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="file1" name="ai_safety_reason_file" class="file-upload-input"
+                                    accept="image/*,.pdf,.doc,.docx">
+                                <label for="file1" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click to upload file</span>
+                                </label>
+                                <div id="fileName1" class="file-name"></div>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="prev-btn" onclick="prevSection('question1', 'personalInfo')">
+                                <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
+                            </button>
+                            <button type="button" class="next-btn" onclick="nextSection('question1', 'question2')">
+                                Next <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div id="question2" class="question-section">
+                        <h3>AI and Employment</h3>
+                        <div class="form-group">
+                            <label>Is AI replacing human jobs? <span class="required">*</span></label>
+                            <div class="boolean-options" id="ai-jobs-options">
+                                <div class="boolean-option">
+                                    <input type="radio" id="jobs-yes" name="ai_jobs" value="yes" required>
+                                    <label for="jobs-yes">Yes</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="jobs-no" name="ai_jobs" value="no">
+                                    <label for="jobs-no">No</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="jobs-some" name="ai_jobs" value="some">
+                                    <label for="jobs-some">Some Jobs</label>
+                                </div>
+                            </div>
+                            <div class="error-message">Please select an option</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason2">Please explain your answer <span class="required">*</span></label>
+                            <textarea id="reason2" name="ai_jobs_reason"
+                                placeholder="Explain how AI is affecting employment..." required></textarea>
+                            <div class="error-message">Please explain your answer</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload supporting document (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="file2" name="ai_jobs_reason_file" class="file-upload-input"
+                                    accept="image/*,.pdf,.doc,.docx">
+                                <label for="file2" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click to upload file</span>
+                                </label>
+                                <div id="fileName2" class="file-name"></div>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="prev-btn" onclick="prevSection('question2', 'question1')">
+                                <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
+                            </button>
+                            <button type="button" class="next-btn" onclick="nextSection('question2', 'question3')">
+                                Next <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div id="question3" class="question-section">
+                        <h3>AI Accuracy</h3>
+                        <div class="form-group">
+                            <label>Is AI always correct? <span class="required">*</span></label>
+                            <div class="boolean-options" id="ai-correct-options">
+                                <div class="boolean-option">
+                                    <input type="radio" id="correct-yes" name="ai_correct" value="yes" required>
+                                    <label for="correct-yes">Yes</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="correct-no" name="ai_correct" value="no">
+                                    <label for="correct-no">No</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="correct-mostly" name="ai_correct" value="mostly">
+                                    <label for="correct-mostly">Mostly</label>
+                                </div>
+                            </div>
+                            <div class="error-message">Please select an option</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason3">Please explain your answer <span class="required">*</span></label>
+                            <textarea id="reason3" name="ai_correct_reason"
+                                placeholder="Explain your views on AI accuracy..." required></textarea>
+                            <div class="error-message">Please explain your answer</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload supporting document (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="file3" name="ai_correct_reason_file" class="file-upload-input"
+                                    accept="image/*,.pdf,.doc,.docx">
+                                <label for="file3" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click to upload file</span>
+                                </label>
+                                <div id="fileName3" class="file-name"></div>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="prev-btn" onclick="prevSection('question3', 'question2')">
+                                <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
+                            </button>
+                            <button type="button" class="next-btn" onclick="nextSection('question3', 'question4')">
+                                Next <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div id="question4" class="question-section">
+                        <h3>AI in Education</h3>
+                        <div class="form-group">
+                            <label>Can AI help improve education? <span class="required">*</span></label>
+                            <div class="boolean-options" id="ai-education-options">
+                                <div class="boolean-option">
+                                    <input type="radio" id="edu-yes" name="ai_education" value="yes" required>
+                                    <label for="edu-yes">Yes</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="edu-no" name="ai_education" value="no">
+                                    <label for="edu-no">No</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="edu-somewhat" name="ai_education" value="somewhat">
+                                    <label for="edu-somewhat">Somewhat</label>
+                                </div>
+                            </div>
+                            <div class="error-message">Please select an option</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason4">Please explain your answer <span class="required">*</span></label>
+                            <textarea id="reason4" name="ai_education_reason"
+                                placeholder="Explain how AI can impact education..." required></textarea>
+                            <div class="error-message">Please explain your answer</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload supporting document (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="file4" name="ai_education_reason_file" class="file-upload-input"
+                                    accept="image/*,.pdf,.doc,.docx">
+                                <label for="file4" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click to upload file</span>
+                                </label>
+                                <div id="fileName4" class="file-name"></div>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="prev-btn" onclick="prevSection('question4', 'question3')">
+                                <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
+                            </button>
+                            <button type="button" class="next-btn" onclick="nextSection('question4', 'question5')">
+                                Next <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div id="question5" class="question-section">
+                        <h3>Trust in AI</h3>
+                        <div class="form-group">
+                            <label>Should we trust AI fully? <span class="required">*</span></label>
+                            <div class="boolean-options" id="ai-trust-options">
+                                <div class="boolean-option">
+                                    <input type="radio" id="trust-yes" name="ai_trust" value="yes" required>
+                                    <label for="trust-yes">Yes</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="trust-no" name="ai_trust" value="no">
+                                    <label for="trust-no">No</label>
+                                </div>
+                                <div class="boolean-option">
+                                    <input type="radio" id="trust-partial" name="ai_trust" value="partial">
+                                    <label for="trust-partial">Partially</label>
+                                </div>
+                            </div>
+                            <div class="error-message">Please select an option</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason5">Please explain your answer <span class="required">*</span></label>
+                            <textarea id="reason5" name="ai_trust_reason"
+                                placeholder="Explain your views on trusting AI..." required></textarea>
+                            <div class="error-message">Please explain your answer</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload supporting document (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="file5" name="ai_trust_reason_file" class="file-upload-input"
+                                    accept="image/*,.pdf,.doc,.docx">
+                                <label for="file5" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Click to upload file</span>
+                                </label>
+                                <div id="fileName5" class="file-name"></div>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="prev-btn" onclick="prevSection('question5', 'question4')">
+                                <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
+                            </button>
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-paper-plane" style="margin-right: 10px;"></i>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-envelope"></i> aisolution@gmail.com</a>
+                <a href="#"><i class="fas fa-mobile-alt"></i>
+                    +91 7797593863</a>
+            </div>
+            <p class="copyright">
+                <i class="far fa-copyright"></i> 2025 AI Solutions. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor Effect
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Interactive elements cursor effect
+        const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, label[for]');
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursor.style.opacity = '0.5';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.2)';
+            });
+
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.opacity = '0.2';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // File upload display
+        document.querySelectorAll('.file-upload-input').forEach((input, index) => {
+            input.addEventListener('change', function () {
+                const fileName = this.files[0]?.name || 'No file selected';
+                const fileNameDisplay = document.getElementById(`fileName${index + 1}`);
+                fileNameDisplay.textContent = fileName;
+                fileNameDisplay.style.display = 'block';
+            });
+        });
+
+        // Form navigation
+        let currentSection = 'personalInfo';
+        const totalSections = 6; // personal info + 5 questions
+
+        function updateProgress(current) {
+            const progressPercentage = (current / 6) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercentage}%`;
+
+            const steps = document.querySelectorAll('.progress-step');
+            steps.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index + 1 === current) {
+                    step.classList.add('active');
+                } else if (index + 1 < current) {
+                    step.classList.add('completed');
+                }
+
+                // Update connecting lines
+                if (index + 1 < current) {
+                    step.nextElementSibling?.classList.add('completed');
+                }
+            });
+        }
+
+        function nextSection(current, next) {
+            if (validateSection(current)) {
+                document.getElementById(current).classList.remove('active');
+                document.getElementById(next).classList.add('active');
+                currentSection = next;
+                const sectionNumber = getSectionNumber(next);
+                updateProgress(sectionNumber);
+                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function prevSection(current, prev) {
+            document.getElementById(current).classList.remove('active');
+            document.getElementById(prev).classList.add('active');
+            currentSection = prev;
+            const sectionNumber = getSectionNumber(prev);
+            updateProgress(sectionNumber);
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function getSectionNumber(sectionId) {
+            const sections = ['personalInfo', 'question1', 'question2', 'question3', 'question4', 'question5'];
+            return sections.indexOf(sectionId) + 1;
+        }
+
+        function validateSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const inputs = section.querySelectorAll('[required]');
+            let isValid = true;
+
+            // Reset all error states first
+            section.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('invalid');
+            });
+
+            inputs.forEach(input => {
+                const formGroup = input.closest('.form-group');
+
+                if (input.type === 'radio') {
+                    const name = input.name;
+                    const checked = section.querySelector(`input[name="${name}"]:checked`);
+                    if (!checked) {
+                        isValid = false;
+                        const radioGroup = document.querySelector(`.boolean-options[id="${name}-options"]`);
+                        if (radioGroup) {
+                            radioGroup.closest('.form-group').classList.add('invalid');
+                        }
+                    }
+                } else {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        if (formGroup) {
+                            formGroup.classList.add('invalid');
+                        }
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        // Initialize progress bar
+        updateProgress(1);
+
+        // Form submission handling
+
+        // Header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Real-time validation for text inputs
+        document.querySelectorAll('input[type="text"], input[type="email"], textarea').forEach(input => {
+            input.addEventListener('input', function () {
+                const formGroup = this.closest('.form-group');
+                if (this.value.trim()) {
+                    formGroup.classList.remove('invalid');
+                }
+            });
+        });
+
+        // Real-time validation for radio buttons
+        document.querySelectorAll('.boolean-options').forEach(group => {
+            const inputs = group.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const formGroup = group.closest('.form-group');
+                    formGroup.classList.remove('invalid');
+                });
+            });
+        });
+
+        // Real-time validation for select
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', function () {
+                const formGroup = this.closest('.form-group');
+                if (this.value) {
+                    formGroup.classList.remove('invalid');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

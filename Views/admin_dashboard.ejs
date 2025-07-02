@@ -20,6 +20,8 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -815,55 +817,55 @@
             }
 
 
-
-
-            .reject-container {
-                background: #f8f9fa;
-                border: 1px solid #e0e0e0;
-                border-radius: 4px;
-                padding: 16px;
-                margin: 8px 0;
-                display: none;
-
+            .response-container {
+                background: #ffffff;
+                border: 1px solid #eaeaea;
+                border-radius: 6px;
+                padding: 20px;
+                margin: 10px 0;
             }
 
-            .reject-form {
+            .response-form {
                 margin: 0;
             }
 
-            .reject-label {
+            .response-label {
                 display: block;
-                font-weight: 600;
-                color: #495057;
-                margin-bottom: 8px;
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 10px;
                 font-size: 14px;
             }
 
-            .reject-textarea {
+            .response-textarea {
                 width: 100%;
                 min-height: 100px;
-                padding: 8px 12px;
-                border: 1px solid #ced4da;
+                padding: 10px;
+                border: 1px solid #ddd;
                 border-radius: 4px;
-                font-family: inherit;
                 font-size: 14px;
-                color: #495057;
+                color: #333;
                 resize: vertical;
                 box-sizing: border-box;
             }
 
-            .reject-submit {
-                background-color: #dc3545;
-                color: white;
-                border: none;
+            .response-submit {
+                background-color: #f0f0f0;
+                color: #333;
+                border: 1px solid #ddd;
                 padding: 8px 16px;
                 border-radius: 4px;
                 font-size: 14px;
                 cursor: pointer;
+                transition: all 0.2s ease;
             }
 
-            .reject-submit-container {
-                margin-top: 12px;
+            .response-submit:hover {
+                background-color: #e0e0e0;
+            }
+
+            .response-submit-container {
+                margin-top: 15px;
                 text-align: right;
             }
         </style>
@@ -877,9 +879,9 @@
                     <div class="box stats-box fade-in" style="animation-delay: 0.1s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=totalCandidates%>
+                                <%=totalcandidate%>
                             </h4>
-                            <span class="stats-label">Applied Candidates</span>
+                            <span class="stats-label">Attended Candidates</span>
                         </div>
                         <div class="stats-icon">
                             <i class="fas fa-calendar-alt"></i>
@@ -889,8 +891,8 @@
                     <div class="box stats-box secondary fade-in" style="animation-delay: 0.2s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=allPaymentCandidates%>
-                                    <span class="stats-label">Total Payment</span>
+                                50
+                                <span class="stats-label">Total Payment</span>
 
                         </div>
                         <div class="stats-icon">
@@ -901,7 +903,7 @@
                     <div class="box stats-box warning fade-in" style="animation-delay: 0.3s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=totalApprovedCandidates%>
+                                10
                             </h4>
                             <span class="stats-label">Pending Approval</span>
                         </div>
@@ -913,7 +915,7 @@
                     <div class="box stats-box danger fade-in" style="animation-delay: 0.4s;">
                         <div class="stats-details">
                             <h4 class="stats-value">
-                                <%=totalRejectedCandidates%>
+                                50
                             </h4>
                             <span class="stats-label">Rejected Candidates</span>
                         </div>
@@ -948,7 +950,7 @@
                     <!-- Data Table Section -->
                     <div class="data-table-section fade-in" style="animation-delay: 0.6s;">
                         <div class="section-header">
-                            <h3 class="section-title">Program Management</h3>
+                            <h3 class="section-title">Survey Management</h3>
                             <div class="section-actions">
                                 <a href="#" class="box-action-btn" title="Add New" style='text-decoration : none'>
                                     <i class="fas fa-plus"></i>
@@ -1001,46 +1003,34 @@
                             <table id="programsTable" class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Sl No </th>
+                                        <th>ID</th>
 
-                                        <th>Application ID</th>
-                                        <th>Student Name</th>
-                                        <th>Father Name</th>
-                                        <th>DOB</th>
-                                        <th>Gender </th>
-                                        <th>Email</th>
-                                        <th>Mobile</th>
-                                        <th>Family Income </th>
-                                        <th>State</th>
-                                        <th>Address </th>
-                                        <th>Current Class</th>
-                                        <th>Current Board</th>
+                                        <th> Name</th>
+                                        <th> Email</th>
 
-                                        <th>Previous Institute</th>
-                                        <th>Previous Class</th>
-                                        <th>Board Name </th>
-                                        <th>Passing Year</th>
-                                        <th>POM </th>
-                                        <th>Obtained Marks </th>
-                                        <th>DOA </th>
 
-                                        <th>Account Holder Name </th>
-                                        <th>Account Number </th>
-                                        <th>Bank Name </th>
-                                        <th>Branch Name</th>
-                                        <th>IFSC Code </th>
-                                        <th>Account Type </th>
-                                        <th>Passbook First Page </th>
+                                        <th> Safety</th>
+                                        <th>Reason</th>
+                                        <th>Download</th>
 
-                                        <th>Result Upload</th>
-                                        <th>Income Certificate </th>
-                                        <th>Admission Receipt </th>
-                                        <th>Attendance Certificate </th>
+                                        <th> Jobs</th>
+                                        <th>Reason</th>
+                                        <th>Download</th>
 
-                                        <th>Payment Status</th>
-                                        <th>Verification Status</th>
 
-                                        <th> Scholarship Status</th>
+                                        <th> Corrcet</th>
+                                        <th>Reason</th>
+                                        <th>Download</th>
+
+                                        <th> Education</th>
+                                        <th>Reason</th>
+                                        <th>Download</th>
+
+                                        <th> Trust</th>
+                                        <th>Reason</th>
+                                        <th>Download</th>
+
+                                        <th>Status </th>
 
 
                                         <th>Actions</th>
@@ -1048,299 +1038,128 @@
                                 </thead>
                                 <tbody>
 
-
-                                    <% allCandidate.forEach((candidate, index)=>{ %>
-
-                                        <tr data-verification='<%=candidate.verification%>'
-                                            data-payment='<%=candidate.paymnt_status%>'>
-
+                                    <% allSurveyData.forEach((survey, index)=>{ %>
+                                        <tr>
                                             <td>
                                                 <%=index+1%>
                                             </td>
 
                                             <td>
-                                                <%=candidate.ApplicationId%>
+                                                <%=survey.name%>
                                             </td>
 
                                             <td>
-                                                <%=candidate.studentName%>
-                                            </td>
 
-                                            <td>
-                                                <%=candidate.fatherName%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.dob%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.gender%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.email%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.mobile%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.familyIncome%>
+                                                <%=survey.email%>
                                             </td>
 
 
                                             <td>
-                                                <%=candidate.state%>
+                                                <%=survey.ai_safety%>
                                             </td>
-
                                             <td>
-                                                <%=candidate.fullAddress%>
+                                                <%=survey.ai_safety_reason%>
                                             </td>
-
                                             <td>
-                                                <%=candidate.currentClass%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.currentBoard%>
+                                                <a href="/download-safety-file/<%=survey._id%>"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
                                             </td>
 
 
                                             <td>
-                                                <%=candidate.previousInstitute%>
+                                                <%=survey.ai_jobs%>
                                             </td>
-
                                             <td>
-                                                <%=candidate.previousClass%>
+                                                <%=survey.ai_jobs_reason%>
                                             </td>
-
                                             <td>
-                                                <%=candidate.boardName%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.passingYear%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.pom%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.obtainedMarks%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.doa%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.accountHolderName%>
+                                                <a href="/download-job-file/<%=survey._id%>"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
                                             </td>
 
 
                                             <td>
-                                                <%=candidate.accountNumber%>
+                                                <%=survey.ai_correct%>
                                             </td>
-
                                             <td>
-                                                <%=candidate.bankName%>
+                                                <%=survey.ai_correct_reason%>
                                             </td>
-
                                             <td>
-                                                <%=candidate.branchName%>
-                                            </td>
-
-                                            <td>
-                                                <%=candidate.ifscCode%>
+                                                <a href="/download-corrcet-file/<%=survey._id%>"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
                                             </td>
 
 
                                             <td>
-                                                <%=candidate.accountType%>
+                                                <%=survey.ai_education%>
+                                            </td>
+                                            <td>
+                                                <%=survey.ai_education_reason%>
+                                            </td>
+                                            <td>
+                                                <a href="/download-education-file/<%=survey._id%>"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
                                             </td>
 
 
-                                            <td><a class="btn btn-primary btn-sm"
-                                                    href="/download-bank-book/<%=candidate._id%>"
-                                                    role="button">Download</a>
+                                            <td>
+                                                <%=survey.ai_trust%>
                                             </td>
-
-                                            <td><a class="btn btn-primary btn-sm"
-                                                    href="/download-result/<%=candidate._id%>"
-                                                    role="button">Download</a>
-                                            </td>
-
-                                            <td><a class="btn btn-primary btn-sm"
-                                                    href="/download-income-certificate/<%=candidate._id%>"
-                                                    role="button">Download</a>
-                                            </td>
-
-                                            <td><a class="btn btn-primary btn-sm"
-                                                    href="/download-admission-receipt/<%=candidate._id%>"
-                                                    role="button">Download</a>
-                                            </td>
-
-
-                                            <td><a class="btn btn-primary btn-sm"
-                                                    href="/download-attendence/<%=candidate._id%>"
-                                                    role="button">Download</a>
+                                            <td>
+                                                <%=survey.ai_trust_reason%>
                                             </td>
 
                                             <td>
-                                                <%=candidate.paymnt_status%>
+                                                <a href="/download-trust-file/<%=survey._id%>"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
+                                            </td>
+
+                                            <td
+                                                style="color : <%= survey.Response_Status.trim() === 'Pending' ? 'Yellow' : 'Green' %>">
+                                                <%= survey.Response_Status %>
                                             </td>
 
                                             <td>
-                                                <%=candidate.verification%>
-                                            </td>
+                                                <div class="d-flex gap-1">
 
-                                            <td>
-                                                <%=candidate.scholarship_status%>
-                                            </td>
-
-                                            <td>
-                                                <script>
-                                                    const deleteCandidate = (id) => {
-                                                        Swal.fire({
-                                                            title: "Are you sure?",
-                                                            text: "You won't be able to revert this!",
-                                                            icon: "warning",
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: "#3085d6",
-                                                            cancelButtonColor: "#d33",
-                                                            confirmButtonText: "Yes, delete it!"
-                                                        }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                window.location.href = `/delete-candidate/${id}`
-                                                            }
-                                                        });
-                                                    }
-
-                                                    const makePayment = (id) => {
-                                                        Swal.fire({
-                                                            title: "Are you sure?",
-                                                            text: "You won't be able to revert this!",
-                                                            icon: "warning",
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: "#3085d6",
-                                                            cancelButtonColor: "#d33",
-                                                            confirmButtonText: "Yes, Payment it!"
-                                                        }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                window.location.href = `/make-payment/${id}`
-                                                            }
-                                                        });
-                                                    }
+                                                    <a href="#" class="btn btn-outline btn-sm" title="Delete"
+                                                        onclick="deleteSurvey('<%=survey._id%>')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
 
 
-
-                                                    const verifyCandidate = (id) => {
-                                                        Swal.fire({
-                                                            title: "Are you sure?",
-                                                            text: "You won't be able to revert this!",
-                                                            icon: "warning",
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: "#3085d6",
-                                                            cancelButtonColor: "#d33",
-                                                            confirmButtonText: "Yes, verify it!"
-                                                        }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                window.location.href = `/make-vification/${id}`
-                                                            }
-                                                        });
-                                                    }
-
-                                                    const showRejectModal = (id) => {
-                                                        $('#rejectCandidateId').val(id);
-                                                        $('#rejectModal').modal('show');
-                                                    }
-
-                                                    const submitRejectForm = () => {
-                                                        const id = $('#rejectCandidateId').val();
-                                                        const status = $('#rejectStatus').val();
-                                                        const reason = $('#rejectReason').val();
-
-                                                        if (!reason) {
-                                                            Swal.fire({
-                                                                icon: 'error',
-                                                                title: 'Error!',
-                                                                text: 'Please provide a rejection reason',
-                                                                confirmButtonColor: '#d33'
-                                                            });
-                                                            return;
-                                                        }
-                                                    }
-
-                                                    const showRejectForm = (button) => {
-
-                                                        document.querySelectorAll('.reject-container').forEach((r) => r.style.display = 'none')
-                                                        const form = button.nextElementSibling
-
-                                                        form.style.display = 'block'
-                                                    }
-
-
-
-                                                </script>
-
-                                                <button onclick="deleteCandidate('<%=candidate._id%>')"
-                                                    class="btn btn-dark btn-sm">
-                                                    <i class="fas fa-trash-alt"></i> Delete
-                                                </button>
-
-                                                <% if(candidate.verification==='Pending' ){%>
-                                                    <button onclick="verifyCandidate('<%=candidate._id%>')"
-                                                        class="btn btn-success btn-sm">
-                                                        <i class="fas fa-check-circle"></i> Verify
-                                                    </button>
-                                                    <%} %>
-
-
-
-                                                        <% if(candidate.paymnt_status==='Pending' ) {%>
-                                                            <button class="btn btn-primary btn-sm"
-                                                                onclick="makePayment('<%=candidate._id%>')">
-                                                                <i class="fas fa-credit-card"></i>
-                                                                Payment
+                                                <div class="response-container">
+                                                    <form method="post" class="reject-form"
+                                                        action="/survey-response/<%=survey._id%>">
+                                                        <label class="response-label"> Response
+                                                        </label>
+                                                        <textarea class="reject-textarea"
+                                                            placeholder="Please make a response..."
+                                                            name="response"></textarea>
+                                                        <div class="response-submit-container">
+                                                            <button type="submit" class="response-submit">
+                                                                Submit Rejection
                                                             </button>
-                                                            <%} %>
-
-
-
-                                                                <% if (candidate.scholarship_status==='Approved' &&
-                                                                    candidate.paymnt_status==='Pending' ) { %>
-
-                                                                    <button class="btn btn-danger btn-sm"
-                                                                        onclick="showRejectForm(this)">
-                                                                        <i class="fas fa-times-circle"></i>
-                                                                        Reject
-                                                                    </button>
-
-                                                                    <% }%>
-
-                                                                        <div class="reject-container">
-                                                                            <form method="post"
-                                                                                action="/make-reject/<%=candidate._id%>"
-                                                                                class="reject-form">
-                                                                                <label class="reject-label">Reason
-                                                                                    for Rejection</label>
-                                                                                <textarea class="reject-textarea"
-                                                                                    placeholder="Please provide a clear and concise reason for rejection..."
-                                                                                    name="rejectReason"></textarea>
-                                                                                <div class="reject-submit-container">
-                                                                                    <button type="submit"
-                                                                                        class="reject-submit">
-                                                                                        Submit Rejection
-                                                                                    </button>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </td>
+
                                         </tr>
-                                        <%}) %>
+
+                                        <% }) %>
+
                                 </tbody>
                             </table>
                         </div>
@@ -1357,63 +1176,73 @@
         </button>
 
         <script>
-            $(document).ready(function () {
-                // Initialize DataTable with responsive settings
-                $('#programsTable').DataTable({
-                    responsive: true,
-                    paging: true,
-                    searching: true,
-                    info: true,
-                    autoWidth: false,
-                    lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                    dom: '<"top"lf>rt<"bottom"ip>',
-                    language: {
-                        search: "_INPUT_",
-                        searchPlaceholder: "Search programs...",
-                        lengthMenu: "Show _MENU_ entries",
-                        info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                        infoEmpty: "Showing 0 to 0 of 0 entries",
-                        infoFiltered: "(filtered from _MAX_ total entries)",
-                        paginate: {
-                            first: "First",
-                            last: "Last",
-                            next: "Next",
-                            previous: "Previous"
+                $(document).ready(function () {
+                    // Initialize DataTable with responsive settings
+                    $('#programsTable').DataTable({
+                        responsive: true,
+                        paging: true,
+                        searching: true,
+                        info: true,
+                        autoWidth: false,
+                        lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                        dom: '<"top"lf>rt<"bottom"ip>',
+                        language: {
+                            search: "_INPUT_",
+                            searchPlaceholder: "Search programs...",
+                            lengthMenu: "Show _MENU_ entries",
+                            info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                            infoEmpty: "Showing 0 to 0 of 0 entries",
+                            infoFiltered: "(filtered from _MAX_ total entries)",
+                            paginate: {
+                                first: "First",
+                                last: "Last",
+                                next: "Next",
+                                previous: "Previous"
+                            }
                         }
-                    }
-                });
-
-                // Show/hide scroll to top button
-                $(window).scroll(function () {
-                    if ($(this).scrollTop() > 300) {
-                        $('.scroll-top').addClass('active');
-                    } else {
-                        $('.scroll-top').removeClass('active');
-                    }
-                });
-
-                // Smooth scroll to top
-                $('.scroll-top').click(function () {
-                    $('html, body').animate({ scrollTop: 0 }, 300);
-                    return false;
-                });
-
-                // Initialize tooltips
-                $('[data-toggle="tooltip"]').tooltip();
-
-                // Filter functionality
-                $('#applyButton').on('click', () => {
-                    let selectedVeification = $('#verification').val();
-                    let selcetedPayment = $('#payment').val();
-
-                    $('#programsTable tbody tr').each(function () {
-                        $(this).toggle(
-                            (selectedVeification === "" || $(this).attr('data-verification') === selectedVeification) &&
-                            (selcetedPayment === "" || $(this).attr('data-payment') === selcetedPayment)
-                        );
                     });
+
+                    // Show/hide scroll to top button
+                    $(window).scroll(function () {
+                        if ($(this).scrollTop() > 300) {
+                            $('.scroll-top').addClass('active');
+                        } else {
+                            $('.scroll-top').removeClass('active');
+                        }
+                    });
+
+                    // Smooth scroll to top
+                    $('.scroll-top').click(function () {
+                        $('html, body').animate({ scrollTop: 0 }, 300);
+                        return false;
+                    });
+
+                    // Initialize tooltips
+                    $('[data-toggle="tooltip"]').tooltip();
                 });
-            });
+
+            const deleteSurvey = (id) => {
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to undo this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel"
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        window.location.href = `/delete-survey/${id}`
+                    }
+                }
+                )
+            }
+
+
         </script>
     </body>
 
