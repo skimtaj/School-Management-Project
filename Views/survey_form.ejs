@@ -53,6 +53,94 @@
             overflow-x: hidden;
         }
 
+        /* Image Popup Modal */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-image {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .popup-close:hover {
+            background-color: var(--error-color);
+        }
+
+        .popup-footer {
+            padding: 15px;
+            text-align: center;
+            background-color: var(--background-light);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .popup-footer button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .popup-footer button:hover {
+            background-color: var(--primary-dark);
+        }
+
         /* Modern Cursor Effect */
         .cursor {
             position: fixed;
@@ -153,13 +241,11 @@
             width: 100%;
             height: 100%;
             max-height: 350px;
-            /* Keep this if you want to limit height */
             border-radius: var(--border-radius);
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow-md);
             border: 1px solid rgba(0, 0, 0, 0.1);
             object-fit: cover;
-            /* This keeps the aspect ratio while covering */
         }
 
         .form-section {
@@ -638,6 +724,15 @@
             .prev-btn {
                 flex: 1;
             }
+
+            .popup-content {
+                max-width: 95%;
+                max-height: 95vh;
+            }
+
+            .popup-image {
+                max-height: 75vh;
+            }
         }
 
         @media (max-width: 480px) {
@@ -659,14 +754,38 @@
             }
 
             .form-section h2 {
-
                 font-size: 20px;
+            }
+
+            .popup-content {
+                max-width: 98%;
+                max-height: 98vh;
+            }
+
+            .popup-image {
+                max-height: 70vh;
+            }
+
+            .popup-footer {
+                padding: 10px;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Image Popup Modal -->
+    <div class="popup-overlay" id="imagePopup">
+        <div class="popup-content">
+            <span class="popup-close" id="closePopup">&times;</span>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_XQ-7OMPYV_4dvQkWbqoUU8xYvVCq5p3I4VdmeHYZ1jsWhp8aJ6DjFwEkWZKAtzXd5s_sC-xunl7Ouxfu-pyjr2A3d91gPNC8-Lgou2-_51omfVm9GjK1nG2SAth8Qy7Vs9uvIp6L6bxI3b9IwqYOKcRlvjkLQ4JxoaVmiDrv796pdYuAtSc12LMgshoU/w640-h360/WhatsApp%20Image%202025-07-02%20at%202.27.54%20PM.jpeg" 
+                 alt="Welcome Image" class="popup-image">
+            <div class="popup-footer">
+                <button id="closePopupBtn">Continue to Survey</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Custom Cursor Elements -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
@@ -690,7 +809,12 @@
                     alt="AI Impact Survey" class="form-image">
 
                 <h2>AI IMPACT SURVEY - 2025</h2>
-                <p class="form-subtitle">Share your experience with artificial intelligence in your professional field
+                <p class="form-subtitle">Share your experience about artificial intelligence
+                </p> <br>
+
+                <p style="margin-top: -30px; color: #d32f2f; background-color: #ffebee; padding: 8px 12px; border-left: 4px solid #d32f2f; border-radius: 4px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-language" style="font-size: 1.2em;"></i>
+                    বাংলা অথবা ম্যাসেজ ল্যাঙ্গুয়েজ গ্রহণযোগ্য
                 </p>
 
                 <!-- Modern Progress Bar -->
@@ -707,8 +831,6 @@
                         <div class="progress-step">6</div>
                     </div>
                 </div>
-
-
 
                 <script>
                 <% if (messages.success) { %>
@@ -728,18 +850,11 @@
                             confirmButtonColor: '#d33'
                         });
                 <% } %>
-
                 </script>
 
-
-
-
-
                 <!-- Personal Information Section -->
-
-
                 <form method="post" action="/ai-survey-form" enctype="multipart/form-data">
-
+                    <!-- Your existing form sections here -->
                     <div id="personalInfo" class="question-section active">
                         <h3>Personal Information</h3>
                         <div class="form-group">
@@ -1040,7 +1155,6 @@
                             </button>
                         </div>
                     </div>
-
                 </form>
             </section>
         </div>
@@ -1060,6 +1174,41 @@
     </footer>
 
     <script>
+        // Image Popup Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const popup = document.getElementById('imagePopup');
+            const closePopup = document.getElementById('closePopup');
+            const closePopupBtn = document.getElementById('closePopupBtn');
+            
+            // Show popup after 500ms delay
+            setTimeout(() => {
+                popup.classList.add('active');
+            }, 500);
+
+            // Close popup when clicking X or button
+            closePopup.addEventListener('click', function() {
+                popup.classList.remove('active');
+            });
+
+            closePopupBtn.addEventListener('click', function() {
+                popup.classList.remove('active');
+            });
+
+            // Close popup when clicking outside the content
+            popup.addEventListener('click', function(e) {
+                if (e.target === popup) {
+                    popup.classList.remove('active');
+                }
+            });
+
+            // Close popup with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && popup.classList.contains('active')) {
+                    popup.classList.remove('active');
+                }
+            });
+        });
+
         // Custom Cursor Effect
         const cursor = document.querySelector('.cursor');
         const cursorFollower = document.querySelector('.cursor-follower');
@@ -1188,8 +1337,6 @@
 
         // Initialize progress bar
         updateProgress(1);
-
-        // Form submission handling
 
         // Header scroll effect
         window.addEventListener('scroll', function () {
