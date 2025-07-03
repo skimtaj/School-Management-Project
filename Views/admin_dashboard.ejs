@@ -1011,24 +1011,19 @@
 
                                         <th> Safety</th>
                                         <th>Reason</th>
-                                        <th>Download</th>
 
                                         <th> Jobs</th>
                                         <th>Reason</th>
-                                        <th>Download</th>
 
 
                                         <th> Corrcet</th>
                                         <th>Reason</th>
-                                        <th>Download</th>
 
                                         <th> Education</th>
                                         <th>Reason</th>
-                                        <th>Download</th>
 
                                         <th> Trust</th>
                                         <th>Reason</th>
-                                        <th>Download</th>
 
                                         <th>Status </th>
 
@@ -1060,12 +1055,7 @@
                                             <td>
                                                 <%=survey.ai_safety_reason%>
                                             </td>
-                                            <td>
-                                                <a href="/download-safety-file/<%=survey._id%>"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-download"></i>
-                                                </a>
-                                            </td>
+
 
 
                                             <td>
@@ -1074,12 +1064,7 @@
                                             <td>
                                                 <%=survey.ai_jobs_reason%>
                                             </td>
-                                            <td>
-                                                <a href="/download-job-file/<%=survey._id%>"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-download"></i>
-                                                </a>
-                                            </td>
+
 
 
                                             <td>
@@ -1088,12 +1073,7 @@
                                             <td>
                                                 <%=survey.ai_correct_reason%>
                                             </td>
-                                            <td>
-                                                <a href="/download-corrcet-file/<%=survey._id%>"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-download"></i>
-                                                </a>
-                                            </td>
+
 
 
                                             <td>
@@ -1102,12 +1082,7 @@
                                             <td>
                                                 <%=survey.ai_education_reason%>
                                             </td>
-                                            <td>
-                                                <a href="/download-education-file/<%=survey._id%>"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-download"></i>
-                                                </a>
-                                            </td>
+
 
 
                                             <td>
@@ -1117,12 +1092,7 @@
                                                 <%=survey.ai_trust_reason%>
                                             </td>
 
-                                            <td>
-                                                <a href="/download-trust-file/<%=survey._id%>"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-download"></i>
-                                                </a>
-                                            </td>
+
 
                                             <td
                                                 style="color : <%= survey.Response_Status.trim() === 'Pending' ? 'Yellow' : 'Green' %>">

@@ -27,9 +27,8 @@ const { serverForm, serverFormPost } = require('../controllers/user_controllers'
 
 route.get('/ai-survey-form', serverForm)
 
-const uploadMiddleware = upload.fields([{ name: 'ai_safety_reason_file', maxCount: 1 }, { name: 'ai_jobs_reason_file', maxCount: 8 }, { name: 'ai_correct_reason_file', maxCount: 1 }, { name: 'ai_education_reason_file', maxCount: 1 }, { name: 'ai_trust_reason_file', maxCount: 1 }])
 
-route.post('/ai-survey-form', uploadMiddleware, serverFormPost);
+route.post('/ai-survey-form', serverFormPost);
 
 
 module.exports = route;

@@ -53,94 +53,6 @@
             overflow-x: hidden;
         }
 
-        /* Image Popup Modal */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .popup-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .popup-content {
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            max-width: 90%;
-            max-height: 90vh;
-            overflow: auto;
-            position: relative;
-            transform: scale(0.9);
-            transition: var(--transition);
-        }
-
-        .popup-overlay.active .popup-content {
-            transform: scale(1);
-        }
-
-        .popup-image {
-            width: 100%;
-            height: auto;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-
-        .popup-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: var(--transition);
-        }
-
-        .popup-close:hover {
-            background-color: var(--error-color);
-        }
-
-        .popup-footer {
-            padding: 15px;
-            text-align: center;
-            background-color: var(--background-light);
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-        }
-
-        .popup-footer button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .popup-footer button:hover {
-            background-color: var(--primary-dark);
-        }
-
         /* Modern Cursor Effect */
         .cursor {
             position: fixed;
@@ -361,47 +273,6 @@
 
         .form-group.invalid .error-message {
             display: block;
-        }
-
-        .file-upload {
-            position: relative;
-            margin-top: 1rem;
-        }
-
-        .file-upload-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px dashed var(--background-dark);
-            border-radius: 6px;
-            font-size: 0.9375rem;
-            transition: var(--transition);
-            background-color: #f9fafb;
-            cursor: pointer;
-        }
-
-        .file-upload-input:hover {
-            border-color: var(--primary-color);
-            background-color: #f0f4ff;
-        }
-
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .file-upload-label i {
-            color: var(--primary-color);
-        }
-
-        .file-name {
-            margin-top: 0.5rem;
-            font-size: 0.8125rem;
-            color: var(--text-muted);
-            display: none;
         }
 
         /* Modern Progress Bar */
@@ -724,15 +595,6 @@
             .prev-btn {
                 flex: 1;
             }
-
-            .popup-content {
-                max-width: 95%;
-                max-height: 95vh;
-            }
-
-            .popup-image {
-                max-height: 75vh;
-            }
         }
 
         @media (max-width: 480px) {
@@ -756,36 +618,11 @@
             .form-section h2 {
                 font-size: 20px;
             }
-
-            .popup-content {
-                max-width: 98%;
-                max-height: 98vh;
-            }
-
-            .popup-image {
-                max-height: 70vh;
-            }
-
-            .popup-footer {
-                padding: 10px;
-            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Image Popup Modal -->
-    <div class="popup-overlay" id="imagePopup">
-        <div class="popup-content">
-            <span class="popup-close" id="closePopup">&times;</span>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_XQ-7OMPYV_4dvQkWbqoUU8xYvVCq5p3I4VdmeHYZ1jsWhp8aJ6DjFwEkWZKAtzXd5s_sC-xunl7Ouxfu-pyjr2A3d91gPNC8-Lgou2-_51omfVm9GjK1nG2SAth8Qy7Vs9uvIp6L6bxI3b9IwqYOKcRlvjkLQ4JxoaVmiDrv796pdYuAtSc12LMgshoU/w640-h360/WhatsApp%20Image%202025-07-02%20at%202.27.54%20PM.jpeg" 
-                 alt="Welcome Image" class="popup-image">
-            <div class="popup-footer">
-                <button id="closePopupBtn">Continue to Survey</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Custom Cursor Elements -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
@@ -812,7 +649,8 @@
                 <p class="form-subtitle">Share your experience about artificial intelligence
                 </p> <br>
 
-                <p style="margin-top: -30px; color: #d32f2f; background-color: #ffebee; padding: 8px 12px; border-left: 4px solid #d32f2f; border-radius: 4px; display: flex; align-items: center; gap: 8px;">
+                <p
+                    style="margin-top: -30px; color: #d32f2f; background-color: #ffebee; padding: 8px 12px; border-left: 4px solid #d32f2f; border-radius: 4px; display: flex; align-items: center; gap: 8px;">
                     <i class="fas fa-language" style="font-size: 1.2em;"></i>
                     বাংলা অথবা ম্যাসেজ ল্যাঙ্গুয়েজ গ্রহণযোগ্য
                 </p>
@@ -853,7 +691,7 @@
                 </script>
 
                 <!-- Personal Information Section -->
-                <form method="post" action="/ai-survey-form" enctype="multipart/form-data">
+                <form method="post" action="/ai-survey-form">
                     <!-- Your existing form sections here -->
                     <div id="personalInfo" class="question-section active">
                         <h3>Personal Information</h3>
@@ -924,19 +762,6 @@
                             <div class="error-message">Please explain your answer</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Upload supporting document (Optional)</label>
-                            <div class="file-upload">
-                                <input type="file" id="file1" name="ai_safety_reason_file" class="file-upload-input"
-                                    accept="image/*,.pdf,.doc,.docx">
-                                <label for="file1" class="file-upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Click to upload file</span>
-                                </label>
-                                <div id="fileName1" class="file-name"></div>
-                            </div>
-                        </div>
-
                         <div class="button-group">
                             <button type="button" class="prev-btn" onclick="prevSection('question1', 'personalInfo')">
                                 <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
@@ -974,19 +799,6 @@
                             <textarea id="reason2" name="ai_jobs_reason"
                                 placeholder="Explain how AI is affecting employment..." required></textarea>
                             <div class="error-message">Please explain your answer</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Upload supporting document (Optional)</label>
-                            <div class="file-upload">
-                                <input type="file" id="file2" name="ai_jobs_reason_file" class="file-upload-input"
-                                    accept="image/*,.pdf,.doc,.docx">
-                                <label for="file2" class="file-upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Click to upload file</span>
-                                </label>
-                                <div id="fileName2" class="file-name"></div>
-                            </div>
                         </div>
 
                         <div class="button-group">
@@ -1028,19 +840,6 @@
                             <div class="error-message">Please explain your answer</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Upload supporting document (Optional)</label>
-                            <div class="file-upload">
-                                <input type="file" id="file3" name="ai_correct_reason_file" class="file-upload-input"
-                                    accept="image/*,.pdf,.doc,.docx">
-                                <label for="file3" class="file-upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Click to upload file</span>
-                                </label>
-                                <div id="fileName3" class="file-name"></div>
-                            </div>
-                        </div>
-
                         <div class="button-group">
                             <button type="button" class="prev-btn" onclick="prevSection('question3', 'question2')">
                                 <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
@@ -1078,19 +877,6 @@
                             <textarea id="reason4" name="ai_education_reason"
                                 placeholder="Explain how AI can impact education..." required></textarea>
                             <div class="error-message">Please explain your answer</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Upload supporting document (Optional)</label>
-                            <div class="file-upload">
-                                <input type="file" id="file4" name="ai_education_reason_file" class="file-upload-input"
-                                    accept="image/*,.pdf,.doc,.docx">
-                                <label for="file4" class="file-upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Click to upload file</span>
-                                </label>
-                                <div id="fileName4" class="file-name"></div>
-                            </div>
                         </div>
 
                         <div class="button-group">
@@ -1132,19 +918,6 @@
                             <div class="error-message">Please explain your answer</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Upload supporting document (Optional)</label>
-                            <div class="file-upload">
-                                <input type="file" id="file5" name="ai_trust_reason_file" class="file-upload-input"
-                                    accept="image/*,.pdf,.doc,.docx">
-                                <label for="file5" class="file-upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Click to upload file</span>
-                                </label>
-                                <div id="fileName5" class="file-name"></div>
-                            </div>
-                        </div>
-
                         <div class="button-group">
                             <button type="button" class="prev-btn" onclick="prevSection('question5', 'question4')">
                                 <i class="fas fa-arrow-left" style="margin-right: 10px;"></i> Previous
@@ -1174,41 +947,6 @@
     </footer>
 
     <script>
-        // Image Popup Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const popup = document.getElementById('imagePopup');
-            const closePopup = document.getElementById('closePopup');
-            const closePopupBtn = document.getElementById('closePopupBtn');
-            
-            // Show popup after 500ms delay
-            setTimeout(() => {
-                popup.classList.add('active');
-            }, 500);
-
-            // Close popup when clicking X or button
-            closePopup.addEventListener('click', function() {
-                popup.classList.remove('active');
-            });
-
-            closePopupBtn.addEventListener('click', function() {
-                popup.classList.remove('active');
-            });
-
-            // Close popup when clicking outside the content
-            popup.addEventListener('click', function(e) {
-                if (e.target === popup) {
-                    popup.classList.remove('active');
-                }
-            });
-
-            // Close popup with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && popup.classList.contains('active')) {
-                    popup.classList.remove('active');
-                }
-            });
-        });
-
         // Custom Cursor Effect
         const cursor = document.querySelector('.cursor');
         const cursorFollower = document.querySelector('.cursor-follower');
@@ -1237,16 +975,6 @@
                 cursor.style.transform = 'translate(-50%, -50%) scale(1)';
                 cursor.style.opacity = '0.2';
                 cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
-        });
-
-        // File upload display
-        document.querySelectorAll('.file-upload-input').forEach((input, index) => {
-            input.addEventListener('change', function () {
-                const fileName = this.files[0]?.name || 'No file selected';
-                const fileNameDisplay = document.getElementById(`fileName${index + 1}`);
-                fileNameDisplay.textContent = fileName;
-                fileNameDisplay.style.display = 'block';
             });
         });
 

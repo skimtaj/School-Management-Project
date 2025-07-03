@@ -13,40 +13,12 @@ const serverFormPost = async (req, res) => {
 
     const surverData = req.body;
 
-    if (req.files['ai_safety_reason_file']) {
-
-        surverData.ai_safety_reason_file = req.files['ai_safety_reason_file'][0].filename;
-    };
-
-
-    if (req.files['ai_jobs_reason_file']) {
-
-        surverData.ai_jobs_reason_file = req.files['ai_jobs_reason_file'][0].filename;
-    }
-
-    if (req.files['ai_correct_reason_file']) {
-        surverData.ai_correct_reason_file = req.files['ai_correct_reason_file'][0].filename;
-    }
-
-    if (req.files['ai_education_reason_file']) {
-
-        surverData.ai_education_reason_file = req.files['ai_education_reason_file'][0].filename;
-    }
-
-    if (req.files['ai_trust_reason_file']) {
-
-        surverData.ai_trust_reason_file = req.files['ai_trust_reason_file'][0].filename;
-    }
-
-
     const matchEmail = await survey_form.findOne({ email: surverData.email });
 
     if (matchEmail) {
 
         req.flash('error', 'You have already submitted this survey. Thank You!')
     }
-
-
 
 
     const new_survey_form = survey_form(surverData);
