@@ -17,7 +17,6 @@ const surveySchema = mongoose.Schema({
     },
 
 
-
     ai_safety: {
 
         type: String
