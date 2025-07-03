@@ -16,49 +16,47 @@ const serverFormPost = async (req, res) => {
     const matchEmail = await survey_form.findOne({ email: surverData.email });
 
     if (matchEmail) {
-
-        req.flash('error', 'You have already submitted this survey. Thank You!')
+        req.flash('error', 'You have already submitted this survey. Thank You!');
+        return res.redirect('/ai-survey-form')
     }
 
+    else {
 
-    const new_survey_form = survey_form(surverData);
-    await new_survey_form.save();
+        const new_survey_form = survey_form(surverData);
+        await new_survey_form.save();
 
-    const admins = await admin_credential.find();
+        const admins = await admin_credential.find();
+        const adminEmail = await admins.map((a) => a.Email.split(','))
 
-    const adminEmail = await admins.map((a) => a.Email.split(','))
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.User,
+                pass: process.env.Pass
+            }
+        });
 
+        const mailOptions = {
+            from: process.env.User,
+            to: adminEmail,
+            subject: 'Surver Notification',
+            text: ` A new user Submitted survey \nName : ${new_survey_form.name} \nEmail : ${new_survey_form.email}`
+        };
 
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
 
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.User,
-            pass: process.env.Pass
-        }
-    });
+        console.log(new_survey_form)
 
-    const mailOptions = {
-        from: process.env.User,
-        to: adminEmail,
-        subject: 'Surver Notification',
-        text: ` A new user Submitted survey \nName : ${new_survey_form.name} \nEmail : ${new_survey_form.email}`
-    };
+        req.flash('success', 'Thank you for completing the survey, You’ll get your certificate shortly ')
+        return res.redirect('/ai-survey-form')
+    }
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-
-
-
-    console.log(new_survey_form)
-
-    req.flash('success', 'Thank you for completing the survey, You’ll get your certificate shortly ')
-    return res.redirect('/ai-survey-form')
 
 }
 
