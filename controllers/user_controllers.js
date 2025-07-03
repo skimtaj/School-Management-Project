@@ -53,7 +53,7 @@ const serverFormPost = async (req, res) => {
 
         console.log(new_survey_form)
 
-        req.flash('success', 'Thank you for completing the survey, You’ll get your certificate shortly ')
+        req.flash('success', 'Thank you for completing the survey')
         return res.redirect('/ai-survey-form')
     }
 
