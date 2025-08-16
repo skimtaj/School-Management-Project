@@ -1,63 +1,91 @@
-const admin_credential = require("../models/admin_credential");
-const survey_form = require("../models/survey_form");
 
-const nodemailer = require('nodemailer');
+const admission_model = require('../models/admission_model');
 
 
-const serverForm = (req, res) => {
+const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
+const fs = require('fs/promises');
+const path = require('path');
 
-    res.render('../Views/survey_form')
+
+const userLogin = (req, res) => {
+
+    res.render('../Views/user_credential')
+};
+
+const studentMarksheet = async (req, res) => {
+
+    const studentSourse = await admission_model.findById(req.params.id).populate('result')
+
+    res.render('../Views/student_dsahboard', { studentSourse })
 }
 
-const serverFormPost = async (req, res) => {
+const userLoginPost = async (req, res) => {
 
-    const surverData = req.body;
+    const { roll_no, DOB } = req.body;
+    const studentrollNo = await admission_model.findOne({ roll_no: roll_no });
 
-    const matchEmail = await survey_form.findOne({ email: surverData.email });
+    if (studentrollNo) {
 
-    if (matchEmail) {
-        req.flash('error', 'You have already submitted this survey. Thank You!');
-        return res.redirect('/ai-survey-form')
+        const matchDOB = await admission_model.findOne({ DOB: DOB });
+        if (matchDOB) {
+
+            return res.redirect(`/JUK/student-result/${studentrollNo._id}`)
+        }
+
+        else {
+
+            req.flash('error', 'DOB is not matching');
+            return res.redirect('/JUK/student-login')
+        }
     }
 
     else {
-
-        const new_survey_form = survey_form(surverData);
-        await new_survey_form.save();
-
-        const admins = await admin_credential.find();
-        const adminEmail = await admins.map((a) => a.Email.split(','))
-
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.User,
-                pass: process.env.Pass
-            }
-        });
-
-        const mailOptions = {
-            from: process.env.User,
-            to: adminEmail,
-            subject: 'Surver Notification',
-            text: ` A new user Submitted survey \nName : ${new_survey_form.name} \nEmail : ${new_survey_form.email}`
-        };
-
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
-
-        console.log(new_survey_form)
-
-        req.flash('success', 'Thank you for completing the survey')
-        return res.redirect('/ai-survey-form')
+        req.flash('error', 'Student is not exist');
+        return res.redirect('/JUK/student-login')
     }
-
-
 }
 
-module.exports = { serverForm, serverFormPost }; 
+const downloadMarksheetStudent = async (req, res) => {
+
+    const studentSourse = await admission_model
+        .findById(req.params.id)
+        .populate('result');
+
+    const inputPdfPath = path.join(__dirname, '../Result_format/Result.pdf');
+    const existingPdfBytes = await fs.readFile(inputPdfPath);
+    const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+    const firstPage = pdfDoc.getPage(0);
+    const { height } = firstPage.getSize();
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+    firstPage.drawText(`Name: ${studentSourse.Name}`, { x: 50, y: height - 240, size: 14, font });
+    firstPage.drawText(`Roll No: ${studentSourse.roll_no}`, { x: 50, y: height - 260, size: 14, font });
+
+    let yPos = height - 300;
+    firstPage.drawText(`Subject`, { x: 50, y: yPos, size: 14, font });
+    firstPage.drawText(`Marks`, { x: 300, y: yPos, size: 14, font });
+    yPos -= 20;
+
+
+
+    studentSourse.result.forEach((r) => {
+        r.marksheet.forEach((m) => {
+            firstPage.drawText(m.subject, { x: 50, y: yPos, size: 12, font });
+            firstPage.drawText(m.mark.toString(), { x: 300, y: yPos, size: 12, font });
+            yPos -= 20;
+        });
+    });
+
+    const pdfBytes = await pdfDoc.save();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${studentSourse.Name}_result.pdf"`);
+    res.send(Buffer.from(pdfBytes));
+};
+
+
+
+
+
+
+module.exports = { downloadMarksheetStudent, userLoginPost, userLogin, studentMarksheet };
