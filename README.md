@@ -8,6 +8,9 @@ The **School Management System** is a secure web-based platform that allows stud
 ### 👩‍🎓 Student Panel  
 - View academic results online  
 - Download results in PDF format
+- 
+## 📸 Page Preview  
+
 
 ### 🛠️ Admin Panel  
 - Full authentication & authorization  
