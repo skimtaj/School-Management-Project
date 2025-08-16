@@ -9,13 +9,17 @@ The **School Management System** is a secure web-based platform that allows stud
 - View academic results online  
 - Download results in PDF format
   
-## 📸 Project Preview  
+## 📸 Page Preview  
 ![App Screenshot](https://github.com/skimtaj/School-Management-Project/raw/f14b427e2afab402407b31e3a40475b31d798bb2/WhatsApp%20Image%202025-08-16%20at%203.15.30%20PM.jpeg)
 
 
 ### 🛠️ Admin Panel  
 - Full authentication & authorization  
 - Manage student records and results
+  
+## 📸 Page Preview  
+
+![App Screenshort](https://github.com/skimtaj/School-Management-Project/blob/ac2f6a9362861691f8851ff883422ffb75138c98/screencapture-localhost-3000-JUK-admin-login-2025-08-16-15_26_51.jpg  )
 
   ## 🛠️ Tech Stack  
 - Node.js  
