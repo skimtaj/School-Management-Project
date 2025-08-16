@@ -8,9 +8,7 @@ The **School Management System** is a secure web-based platform that allows stud
 ### 👩‍🎓 Student Panel  
 - View academic results online  
 - Download results in PDF format
-- 
-## 📸 Page Preview  
-
+  
 ## 📸 Project Preview  
 ![App Screenshot](https://github.com/skimtaj/School-Management-Project/raw/f14b427e2afab402407b31e3a40475b31d798bb2/WhatsApp%20Image%202025-08-16%20at%203.15.30%20PM.jpeg)
 
